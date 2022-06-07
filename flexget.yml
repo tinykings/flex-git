@@ -28,6 +28,7 @@ tasks:
       on_exit:        
         for_accepted: echo "{{title}}" >> /home/ryan/.flexget/sonarr.txt
         phase:
-          - curl -X GET "http://192.168.1.15:9696/api/v1/indexer?apikey=3280c963b81f412da16ddbc2f954ea2d" > /home/ryan/.flexget/prowlarr.txt
-          - cat /home/ryan/.flexget/prowlarr.txt | grep definitionName > /home/ryan/.flexget/prowlarr.txt 
-          - cd /home/ryan/.flexget/ && git add * && git commit -m "update" && git push origin main
+          - curl -X GET "http://192.168.1.15:9696/api/v1/indexer?apikey=3280c963b81f412da16ddbc2f954ea2d" | grep definitionName > /home/ryan/.flexget/prowlarr.txt 
+          - cd /home/ryan/.flexget/ && git add *
+          - cd /home/ryan/.flexget/ && git commit -m "update"
+          - cd /home/ryan/.flexget/ && git push origin main
