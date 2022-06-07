@@ -1,0 +1,30 @@
+tasks:
+
+  clean:
+    filesystem:
+      path: "/home/ryan/media"
+      recursive: yes
+      retrieve: files
+      regexp: '.*\.(avi|mkv|mp4)$'
+    accept_all: yes
+    exec:
+      on_output:
+        for_accepted:
+          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}.mkv" -w /home/ryan/swears.txt -e
+          - if [ -f "{{location}}.mkv" ]; then mv "{{location}}.mkv" "{{location}}"; else echo "nothing to clean"; fi
+
+  sonarr-backup:
+    disable: seen
+    sonarr_list:
+      base_url: http://192.168.1.15
+      port: 8989
+      api_key: 04afcfebb2aa42b3be62a3085ebde3da
+    sort_by: title
+    accept_all: yes
+    exec:
+      on_output:
+        phase: echo . > /home/ryan/.flexget/sonarr.txt
+      on_exit:        
+        for_accepted: echo "{{title}}" >> /home/ryan/.flexget/sonarr.txt
+        phase:
+          - 
