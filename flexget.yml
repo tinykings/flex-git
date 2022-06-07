@@ -1,3 +1,4 @@
+#
 tasks:
 
   clean:
@@ -27,4 +28,4 @@ tasks:
       on_exit:        
         for_accepted: echo "{{title}}" >> /home/ryan/.flexget/sonarr.txt
         phase:
-          - 
+          - cd /home/ryan/.flexget/ && git commit -m "update" && git push origin main
