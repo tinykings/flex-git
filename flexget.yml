@@ -13,6 +13,8 @@ tasks:
         for_accepted:
           - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}.mkv" -w /home/ryan/swears.txt -e
           - if [ -f "{{location}}.mkv" ]; then mv "{{location}}.mkv" "{{location}}"; else echo "nothing to clean"; fi
+      on_exit:
+        phase: find /home/ryan/media/ -name "*.srt" -type f -delete
 
   backup:
     disable: seen
@@ -29,6 +31,7 @@ tasks:
         for_accepted: echo "{{title}}" >> /home/ryan/.flexget/sonarr.txt
         phase:
           - curl -X GET "http://192.168.1.15:9696/api/v1/indexer?apikey=3280c963b81f412da16ddbc2f954ea2d" | grep definitionName > /home/ryan/.flexget/prowlarr.txt 
+          - curl -X GET "http://192.168.1.15:8989/api/calendar?apikey=04afcfebb2aa42b3be62a3085ebde3da" | grep '"titleSlug"\|"airDate"' | sed 's/titleSlug/ /g' | sed 's/airDate/ /g' > /home/ryan/.flexget/calendar.txt
           - cd /home/ryan/.flexget/ && git add *
           - cd /home/ryan/.flexget/ && git commit -m "update"
           - cd /home/ryan/.flexget/ && git push origin main
