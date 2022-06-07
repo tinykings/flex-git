@@ -14,13 +14,12 @@ tasks:
           - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}.mkv" -w /home/ryan/swears.txt -e
           - if [ -f "{{location}}.mkv" ]; then mv "{{location}}.mkv" "{{location}}"; else echo "nothing to clean"; fi
 
-  sonarr-backup:
+  backup:
     disable: seen
     sonarr_list:
       base_url: http://192.168.1.15
       port: 8989
       api_key: 04afcfebb2aa42b3be62a3085ebde3da
-      include_data: yes
     sort_by: title
     accept_all: yes
     exec:
@@ -29,4 +28,6 @@ tasks:
       on_exit:        
         for_accepted: echo "{{title}}" >> /home/ryan/.flexget/sonarr.txt
         phase:
-          - cd /home/ryan/.flexget/ && git add sonarr.txt flexget.yml && git commit -m "update" && git push origin main
+          - curl -X GET "http://192.168.1.15:9696/api/v1/indexer?apikey=3280c963b81f412da16ddbc2f954ea2d" > /home/ryan/.flexget/prowlarr.txt
+          - cat /home/ryan/.flexget/prowlarr.txt | grep definitionName > /home/ryan/.flexget/prowlarr.txt 
+          - cd /home/ryan/.flexget/ && git add * && git commit -m "update" && git push origin main
