@@ -20,6 +20,7 @@ tasks:
       base_url: http://192.168.1.15
       port: 8989
       api_key: 04afcfebb2aa42b3be62a3085ebde3da
+      include_data: yes
     sort_by: title
     accept_all: yes
     exec:
