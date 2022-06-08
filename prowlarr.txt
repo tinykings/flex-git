@@ -1,8 +1,0 @@
-    "definitionName": "eztv",
-    "definitionName": "kickasstorrents-to",
-    "definitionName": "limetorrents",
-    "definitionName": "nyaasi",
-    "definitionName": "ShowRSS",
-    "definitionName": "thepiratebay",
-    "definitionName": "torrentgalaxy",
-    "definitionName": "yts",
