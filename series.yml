@@ -21,13 +21,13 @@ series:
   shows:
 #    - series:
 #        begin: s01e01
-    - Ms Marvel:
-        begin: s01e01
+    - Ms Marvel
     - Night Sky
     - Obi-Wan Kenobi
     - The Old Man
     - Loot
     - Only Murders in the building
+    - She-Hulk Attorney at Law
 
     - Alaska The Last Frontier
     - All Creatures Great and Small
@@ -67,12 +67,10 @@ series:
     - The Mandalorian
     - The Mosquito Coast
     - The Mysterious Benedict Society
-    - The Orville
     - The Other One
     - The Rookie
-    - The Wonder Years
+    - The Wonder Years 2021
     - The Yorkshire Vet
-    - This Is Us
     - Travel Man 48 Hours in
     - Trying
     - Undone
@@ -88,3 +86,4 @@ series:
 #    - Dispatches from Elsewhere
 #    - Victoria
 #    - The Expanse
+#    - This Is Us
