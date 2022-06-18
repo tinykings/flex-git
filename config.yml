@@ -1,5 +1,17 @@
+schedules:
+  - tasks: ['rss', 'move', 'backup']
+    schedule:
+      hour: 0
+  - tasks: ['search']
+    schedule:
+      hour: '*/2'
+  - tasks: ['cleanup']
+    schedule:
+      day: 3
+
 tasks:
 
+##
   move:
     disable:
       - seen
@@ -25,26 +37,44 @@ tasks:
           - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e > /dev/null 2>&1
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi > /dev/null 2>&1
       on_exit:
-#        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
         phase: find "/home/ryan/completed/"* -type d -empty -delete       
 
-  series:
-    priority: 2
-    template:
-      - series
-      - torrent
+##
+  rss:
+    tvmaze_lookup: yes
+    include: series.yml
+    content_filter:
+      require:
+        - '*.mkv'
+        - '*.mp4'
+    domain_delay:
+      nyaa: 3 seconds
+      limetorrents: 3 seconds
     inputs:
       - rss: { url: 'https://eztv.re/ezrss.xml', silent: yes }
       - rss: { url: 'https://www.limetorrents.info/rss/20/', silent: yes }
       - rss: { url: 'https://torrentgalaxy.to/rss?cat=41', silent: yes }
-#      - rss: { url: 'http://www.torlock.com/movies/rss.xml', silent: yes }
       - rss: { url: 'https://nyaa.si/?page=rss&c=1_2', silent: yes }
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      main_file_only: yes
+      username: transmission
+      password: transmission
+      path: "/data/completed/{{series_name}}"
+      content_filename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
 
+##
   search:
-    priority: 3
-    template:
-      - series
-      - torrent
+    tvmaze_lookup: yes
+    include: series.yml
+    content_filter:
+      require:
+        - '*.mkv'
+        - '*.mp4'
+    domain_delay:
+      nyaa: 3 seconds
+      limetorrents: 3 seconds
     discover:
       release_estimations: strict
       interval: 15 minutes
@@ -60,19 +90,28 @@ tasks:
         - nyaa:
             category: anime eng
             filter: all
-            
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      main_file_only: yes
+      username: transmission
+      password: transmission
+      path: "/data/completed/{{series_name}}"
+      content_filename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
+
+##            
   backup:
     accept_all: yes
     exec:
       on_exit:        
         phase:
-          #github
           - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git add * > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
 
-  deltorrents:
+##
+  cleanup:
     disable:
       - seen
       - seen_info_hash
@@ -82,67 +121,16 @@ tasks:
       port: 9091
       username: transmission
       password: transmission
+    accept_all: yes
     if:
       - transmission_date_done == None: fail
       - not transmission_seed_ratio_ok and not transmission_idle_limit_ok: reject
-      - transmission_date_done > transmission_date_added and transmission_date_done < now - timedelta(days=1): accept
     transmission:
       host: 192.168.1.15
       port: 9091
       username: transmission
       password: transmission
       action: remove
-
-##########################
-
-templates:
-
-  series:
-    tvmaze_lookup: yes
-    include: series.yml
-    content_filter:
-      require:
-        - '*.mkv'
-        - '*.mp4'
-    domain_delay:
-      nyaa: 3 seconds
-      limetorrents: 3 seconds
-  
-  torrent:
-    transmission:
-      host: 192.168.1.15
-      port: 9091
-      main_file_only: yes
-      username: transmission
-      password: transmission
-      path: "/data/completed/{{series_name}}"
-      content_filename: "series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
-      
-  global:
-    no_entries_ok: yes
-    pathscrub: windows
-    log_filter:
-    - message: "is already marked seen in the task populate-series-db"
-    - message: "is before begin value"
-    - message: "because entity has already been downloaded"
-    - message: "because quality already downloaded"
-    - message: "appears to be an episode pack"
-      plugin: parser_internal
-    - message: "rejecting"
-      plugin: content_size
-    - message: "Field `title` is now "
-      plugin: manipulate
-
-schedules:
-  - tasks: ['series']
-    schedule:
-      minute: 0,30
-  - tasks: ['move', 'backup']   
-    schedule:
-      hour: 0
-  - tasks: ['search']
-    schedule:
-      hour: '*/2'
-  - tasks: ['deltorrent']
-    schedule:
-      hour: '*/23'
+    exec:
+      on_exit:
+        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
