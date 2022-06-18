@@ -1,0 +1,89 @@
+series:
+  settings:
+    shows:
+      identified_by: ep
+      target: hdtv+ 1080p
+      quality: webrip+ 720p-1080p
+      specials: yes
+      season_packs: no
+    anime:
+      identified_by: sequence
+      target: 1080p
+      quality: 720p-1080p
+      special_ids:
+        - OVA
+  anime:
+    - Kaguya-sama wa Kokurasetai
+    - Spy x Family
+    - Made in Abyss
+    - Yuru Camp
+
+  shows:
+#    - series:
+#        begin: s01e01
+    - Ms Marvel
+    - Night Sky
+    - Obi-Wan Kenobi
+    - The Old Man
+    - Loot
+    - Only Murders in the building
+
+    - Alaska The Last Frontier
+    - All Creatures Great and Small
+    - Better Call Saul
+    - Bobs Burgers
+    - Call the Midwife
+    - Comedians in Cars Getting Coffee
+    - Doc Martin
+    - Doctor Who 2005
+    - Documentary Now
+    - Endeavour
+    - Fargo
+    - For All Mankind
+    - Foundation
+    - Gardeners World
+    - Grand Designs
+    - Home Before Dark
+    - Homecoming
+    - Loki
+    - Making It
+    - Mr Mayor
+    - Outer Range
+    - Resident Alien
+    - Sanditon
+    - Severance
+    - Slow Horses
+    - Star Trek Discovery
+    - Star Trek Picard
+    - Star Trek Strange New Worlds
+    - Stranger Things
+    - Ted Lasso
+    - Tehran
+    - The Book of Boba Fett
+    - The Crown
+    - The Essex Serpent
+    - The Great British Bake Off
+    - The Mandalorian
+    - The Mosquito Coast
+    - The Mysterious Benedict Society
+    - The Orville
+    - The Other One
+    - The Rookie
+    - The Wonder Years
+    - The Yorkshire Vet
+    - This Is Us
+    - Travel Man 48 Hours in
+    - Trying
+    - Undone
+    - Vera
+
+#ended
+#    - Lodge 49
+#    - Downton Abbey
+#    - Broadchurch
+#    - Brooklyn Nine-Nine
+#    - Lost in Space
+#    - DCI Banks
+#    - Dispatches from Elsewhere
+#    - Victoria
+#    - The Expanse
