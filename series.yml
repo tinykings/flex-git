@@ -1,3 +1,4 @@
+#
 series:
   settings:
     shows:
@@ -21,7 +22,8 @@ series:
   shows:
 #    - series:
 #        begin: s01e01
-    - Ms Marvel
+    - Ms Marvel:
+        begin: s01e01
     - Night Sky
     - Obi-Wan Kenobi
     - The Old Man
