@@ -10,11 +10,11 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e
-          - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
+          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e > /dev/null 2>&1
+          - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi > /dev/null 2>&1
       on_exit:
-        phase: find /home/ryan/media/ -name "*.srt" -type f -delete
-        
+        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
+       
   series:
     priority: 2
     template:
@@ -54,10 +54,31 @@ tasks:
       on_exit:        
         phase:
           #github
-          - cd /home/ryan/.flexget/ && git pull
-          - cd /home/ryan/.flexget/ && git add *
-          - cd /home/ryan/.flexget/ && git commit -m "update"
-          - cd /home/ryan/.flexget/ && git push origin main
+          - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git add * > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
+
+  deltorrents:
+    disable:
+      - seen
+      - seen_info_hash
+      - retry_failed
+    from_transmission:
+      host: 192.168.1.15
+      port: 9091
+      username: transmission
+      password: transmission
+    if:
+      - transmission_date_done == None: fail
+      - not transmission_seed_ratio_ok and not transmission_idle_limit_ok: reject
+      - transmission_date_done > transmission_date_added and transmission_date_done < now - timedelta(days=1): accept
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      username: transmission
+      password: transmission
+      action: remove
 
 ##########################
 
@@ -109,3 +130,6 @@ schedules:
   - tasks: ['series-search']
     schedule:
       hour: '*/2'
+  - tasks: ['deltorrent']
+    schedule:
+      hour: '*/23'
