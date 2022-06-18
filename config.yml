@@ -1,20 +1,33 @@
 tasks:
 
-  clean:
+  move:
+    disable:
+      - seen
+      - seen_info_hash
+      - retry_failed
+    metainfo_series: yes
+    parsing:
+      series: guessit
+    tvmaze_lookup: yes
     filesystem:
-      path: "/home/ryan/media"
+      path: "/home/ryan/completed"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
     accept_all: yes
+    move:
+      to: "/home/ryan/media"
+      rename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
+      clean_source: 50
     exec:
       on_output:
         for_accepted:
           - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e > /dev/null 2>&1
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi > /dev/null 2>&1
       on_exit:
-        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
-       
+#        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
+        phase: find "/home/ryan/completed/"* -type d -empty -delete       
+
   series:
     priority: 2
     template:
@@ -27,7 +40,7 @@ tasks:
 #      - rss: { url: 'http://www.torlock.com/movies/rss.xml', silent: yes }
       - rss: { url: 'https://nyaa.si/?page=rss&c=1_2', silent: yes }
 
-  series-search:
+  search:
     priority: 3
     template:
       - series
@@ -102,8 +115,8 @@ templates:
       main_file_only: yes
       username: transmission
       password: transmission
-      path: "/data/media/{{series_name}}"
-      content_filename: "{{series_name}}-{{series_id}}"
+      path: "/data/completed/{{series_name}}"
+      content_filename: "series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
       
   global:
     no_entries_ok: yes
@@ -124,10 +137,10 @@ schedules:
   - tasks: ['series']
     schedule:
       minute: 0,30
-  - tasks: ['clean', 'backup']   
+  - tasks: ['move', 'backup']   
     schedule:
       hour: 0
-  - tasks: ['series-search']
+  - tasks: ['search']
     schedule:
       hour: '*/2'
   - tasks: ['deltorrent']
