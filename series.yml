@@ -1,18 +1,5 @@
 #
 series:
-  settings:
-    shows:
-      identified_by: ep
-      target: hdtv+ 1080p
-      quality: webrip+ 720p-1080p
-      specials: yes
-      season_packs: no
-    anime:
-      identified_by: sequence
-      target: 1080p
-      quality: 720p-1080p
-      special_ids:
-        - OVA
   anime:
     - Spy x Family
     - Made in Abyss
@@ -22,12 +9,12 @@ series:
 #    - series:
 #        begin: s01e01
     - Ms Marvel
-    - Night Sky
-    - Obi-Wan Kenobi
     - The Old Man
     - Loot
     - Only Murders in the building
     - She-Hulk Attorney at Law
+    - Andor
+    - Paper Girls
 
     - Alaska The Last Frontier
     - All Creatures Great and Small
@@ -36,7 +23,8 @@ series:
     - Call the Midwife
     - Comedians in Cars Getting Coffee
     - Doc Martin
-    - Doctor Who 2005
+    - Doctor Who 2005:
+         begin: s13e07
     - Documentary Now
     - Endeavour
     - Fargo
@@ -49,6 +37,8 @@ series:
     - Loki
     - Making It
     - Mr Mayor
+    - Night Sky
+    - Obi-Wan Kenobi
     - Outer Range
     - Resident Alien
     - Sanditon
@@ -62,7 +52,6 @@ series:
     - Tehran
     - The Book of Boba Fett
     - The Crown
-    - The Essex Serpent
     - The Great British Bake Off
     - The Mandalorian
     - The Mosquito Coast
@@ -70,11 +59,26 @@ series:
     - The Other One
     - The Rookie
     - The Wonder Years 2021
-    - The Yorkshire Vet
+    - The Yorkshire Vet:
+         begin: s13e01
     - Travel Man 48 Hours in
     - Trying
     - Undone
     - Vera
+
+  settings:
+    shows:
+      identified_by: ep
+      target: hdtv+ 1080p
+      quality: webrip+ 720p-1080p
+      specials: yes
+      season_packs: no
+    anime:
+      identified_by: sequence
+      target: 1080p
+      quality: 720p-1080p
+      special_ids:
+        - OVA
 
 #ended
 #    - Lodge 49
@@ -87,3 +91,8 @@ series:
 #    - Victoria
 #    - The Expanse
 #    - This Is Us
+
+
+
+
+

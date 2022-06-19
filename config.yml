@@ -1,18 +1,19 @@
-schedules:
-  - tasks: ['rss', 'move', 'backup']
-    schedule:
-      hour: 0
-  - tasks: ['search']
-    schedule:
-      hour: '*/2'
-  - tasks: ['cleanup']
-    schedule:
-      day: 3
-
 tasks:
 
 ##
+  backup:
+    priority: 1
+    accept_all: yes
+    exec:
+      on_exit:        
+        phase:
+          - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git add * > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
+
   move:
+    priority: 2
     disable:
       - seen
       - seen_info_hash
@@ -41,6 +42,7 @@ tasks:
 
 ##
   rss:
+    priority: 3
     tvmaze_lookup: yes
     include: series.yml
     content_filter:
@@ -66,6 +68,8 @@ tasks:
 
 ##
   search:
+    priority: 4
+    delay: 2 hours
     tvmaze_lookup: yes
     include: series.yml
     content_filter:
@@ -99,19 +103,10 @@ tasks:
       path: "/data/completed/{{series_name}}"
       content_filename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
 
-##            
-  backup:
-    accept_all: yes
-    exec:
-      on_exit:        
-        phase:
-          - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git add * > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
-
 ##
   cleanup:
+    priority: 5
+    delay: 3 days
     disable:
       - seen
       - seen_info_hash
