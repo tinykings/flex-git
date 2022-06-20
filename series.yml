@@ -6,8 +6,6 @@ series:
     - Yuru Camp
 
   shows:
-#    - series:
-#        begin: s01e01
     - Ms Marvel
     - The Old Man
     - Loot
@@ -91,6 +89,9 @@ series:
 #    - The Expanse
 #    - This Is Us
 
+#search
+#    - series:
+#        begin: s01e01
 
 
 
