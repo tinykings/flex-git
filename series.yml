@@ -6,6 +6,8 @@ series:
     - Yuru Camp
 
   shows:
+#    - series:
+#        begin: s01e01
     - Ms Marvel
     - The Old Man
     - Loot
@@ -21,7 +23,8 @@ series:
     - Call the Midwife
     - Comedians in Cars Getting Coffee
     - Doc Martin
-    - Doctor Who 2005
+    - Doctor Who 2005:
+         begin: s13e07
     - Documentary Now
     - Endeavour
     - Fargo
@@ -45,7 +48,6 @@ series:
     - Star Trek Picard
     - Star Trek Strange New Worlds
     - Stranger Things
-    - Superman and Lois
     - Ted Lasso
     - Tehran
     - The Book of Boba Fett
@@ -57,7 +59,8 @@ series:
     - The Other One
     - The Rookie
     - The Wonder Years 2021
-    - The Yorkshire Vet
+    - The Yorkshire Vet:
+         begin: s13e01
     - Travel Man 48 Hours in
     - Trying
     - Undone
@@ -89,9 +92,6 @@ series:
 #    - The Expanse
 #    - This Is Us
 
-#search
-#    - series:
-#        begin: s01e01
 
 
 
