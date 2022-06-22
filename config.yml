@@ -13,8 +13,6 @@ tasks:
         for_accepted:
           - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
-      on_exit:
-        phase: find /home/ryan/media/ -name "*.srt" -type f -delete  
 
   showrss:
     priority: 2
