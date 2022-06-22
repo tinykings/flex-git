@@ -142,14 +142,3 @@ tasks:
     exec:
       on_exit:
         phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
-
-  test:
-    priority: 3
-    manual: yes
-    include: series.yml
-    accept_all: yes
-    list_add:
-      - trakt_list:
-          account: thetinyking
-          list: series
-          type: shows
