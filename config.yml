@@ -1,67 +1,36 @@
 tasks:
 
-##
-  backup:
+  clean:
     priority: 1
-    accept_all: yes
-    exec:
-      on_exit:        
-        phase:
-          - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git add history.txt > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
-
-  move:
-    priority: 2
-    disable:
-      - seen
-      - seen_info_hash
-      - retry_failed
-    metainfo_series: yes
-    parsing:
-      series: guessit
-    tvmaze_lookup: yes
     filesystem:
-      path: "/home/ryan/completed"
+      path: "/home/ryan/media"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
     accept_all: yes
-    move:
-      to: "/home/ryan/media"
-      rename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
-      clean_source: 50
     exec:
       on_output:
         for_accepted:
-          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e > /dev/null 2>&1
-          - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi > /dev/null 2>&1
-          - echo {{title}} >> /home/ryan/.flexget/history.txt
+          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e
+          - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
       on_exit:
-        phase: find "/home/ryan/completed/"* -type d -empty -delete       
+        phase: find /home/ryan/media/ -name "*.srt" -type f -delete  
 
-##
-  rss:
+  showrss:
+    priority: 2
+    rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
+    all_series: yes
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      main_file_only: yes
+      username: transmission
+      password: transmission
+      path: "/data/media/"
+
+  otherrss:
     priority: 3
-    tvmaze_lookup: yes
     include: series.yml
-    content_filter:
-      require:
-        - '*.mkv'
-        - '*.mp4'
-    domain_delay:
-      nyaa: 3 seconds
-      limetorrents: 3 seconds
-      thepiratebay.se: 10 seconds
-      thepiratebay.org: 10 seconds
-      anidex.info: 3 seconds
-      bt-chat.com: 1 seconds
-      ezrss.it: 1 seconds
-      showrss.info: 2 seconds
-      torlock.eu: 1 seconds
-      torrenticity.com: 1 seconds
-      zooqle.com: 2 seconds
     inputs:
       - rss: { url: 'https://eztv.re/ezrss.xml', silent: yes }
       - rss: { url: 'https://eztv.it/ezrss.xml', other_fields: ['torrent:magnetURI'], link: 'torrent:magnetURI', silent: yes }
@@ -75,47 +44,8 @@ tasks:
       main_file_only: yes
       username: transmission
       password: transmission
-      path: "/data/completed/{{series_name}}"
-      content_filename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
+      path: "/data/media/"
 
-##
-  search:
-    priority: 4
-    delay: 2 hours
-    tvmaze_lookup: yes
-    include: series.yml
-    content_filter:
-      require:
-        - '*.mkv'
-        - '*.mp4'
-    domain_delay:
-      nyaa: 3 seconds
-      limetorrents: 3 seconds
-    discover:
-      release_estimations: strict
-      interval: 15 minutes
-      what:
-        - next_series_episodes: yes
-      from:
-        - piratebay:
-            category: highres tv
-        - limetorrents:
-            category: tv
-        - rarbg:
-            category: [2, 18, 41, 49]
-        - nyaa:
-            category: anime eng
-            filter: all
-    transmission:
-      host: 192.168.1.15
-      port: 9091
-      main_file_only: yes
-      username: transmission
-      password: transmission
-      path: "/data/completed/{{series_name}}"
-      content_filename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}"
-
-##
   cleanup:
     priority: 5
     delay: 3 days
