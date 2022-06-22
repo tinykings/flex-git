@@ -6,66 +6,22 @@ series:
     - Yuru Camp
 
   shows:
-#    - series:
-#        begin: s01e01
-    - Ms Marvel
+# Not yet on showrss
+
+    - Gardeners World
+    - Night Sky
+    - Sanditon
+    - The Other One
+    - The Yorkshire Vet
+    - Trying
+  
     - The Old Man
     - Loot
-    - Only Murders in the building
     - She-Hulk Attorney at Law
     - Andor
     - Paper Girls
 
-    - Alaska The Last Frontier
-    - All Creatures Great and Small
-    - Better Call Saul
-    - Bobs Burgers
-    - Call the Midwife
-    - Comedians in Cars Getting Coffee
-    - Deadliest Catch:
-        begin: s18e05
-    - Doc Martin
-    - Doctor Who 2005
-    - Documentary Now
-    - Endeavour
-    - Fargo
-    - For All Mankind
-    - Foundation
-    - Gardeners World
-    - Grand Designs
-    - Home Before Dark
-    - Homecoming
-    - Loki
-    - Making It
-    - Mr Mayor
-    - Night Sky
-    - Obi-Wan Kenobi
-    - Outer Range
-    - Resident Alien
-    - Sanditon
-    - Severance
-    - Slow Horses
-    - Star Trek Discovery
-    - Star Trek Picard
-    - Star Trek Strange New Worlds
-    - Stranger Things
-    - Superman and Lois
-    - Ted Lasso
-    - Tehran
-    - The Book of Boba Fett
-    - The Crown
-    - The Great British Bake Off
-    - The Mandalorian
-    - The Mosquito Coast
-    - The Mysterious Benedict Society
-    - The Other One
-    - The Rookie
-    - The Wonder Years 2021
-    - The Yorkshire Vet
-    - Travel Man 48 Hours in
-    - Trying
-    - Undone
-    - Vera
+
 
   settings:
     shows:
@@ -80,15 +36,3 @@ series:
       quality: 720p-1080p
       special_ids:
         - OVA
-
-#ended
-#    - Lodge 49
-#    - Downton Abbey
-#    - Broadchurch
-#    - Brooklyn Nine-Nine
-#    - Lost in Space
-#    - DCI Banks
-#    - Dispatches from Elsewhere
-#    - Victoria
-#    - The Expanse
-#    - This Is Us
