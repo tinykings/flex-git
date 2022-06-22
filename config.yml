@@ -106,7 +106,6 @@ tasks:
         - nyaa:
             category: anime eng
             filter: all
-        - search_rss: https://torrentz2.eu/feed?f=\{{search_term}}
     transmission:
       host: 192.168.1.15
       port: 9091
