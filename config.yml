@@ -8,7 +8,7 @@ tasks:
       on_exit:        
         phase:
           - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git add * > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git add history.txt > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
 
