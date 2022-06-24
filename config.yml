@@ -24,7 +24,8 @@ tasks:
         for_accepted:
           - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
-          - sed -i '1 i\{{title}}' /home/ryan/.flexget/history.txt
+      on_exit:
+        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
   showrss:
     priority: 2
@@ -37,6 +38,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/media"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1 i\{{title}}' /home/ryan/.flexget/history.txt
 
   otherrss:
     priority: 3
@@ -54,6 +59,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/media"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1 i\{{title}}' /home/ryan/.flexget/history.txt
 
   cleanup:
     priority: 5
@@ -77,6 +86,3 @@ tasks:
       username: transmission
       password: transmission
       action: remove
-    exec:
-      on_exit:
-        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
