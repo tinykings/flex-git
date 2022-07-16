@@ -6,15 +6,15 @@ tasks:
     exec:
       on_exit:        
         phase:
-          - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git add history.txt > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add history.txt > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
   clean:
     priority: 1
     filesystem:
-      path: "/home/ryan/media"
+      path: "/home/pi/media"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -22,10 +22,10 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/ryan/swears.txt -e
+          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
-      on_exit:
-        phase: find /home/ryan/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
+#      on_exit:
+#        phase: find /home/pi/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
   showrss:
     priority: 2
@@ -41,7 +41,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\{{title}}' /home/ryan/.flexget/history.txt
+          - sed -i '1 i\{{title}}' /home/pi/.flexget/history.txt
 
   otherrss:
     priority: 3
@@ -62,7 +62,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\{{title}}' /home/ryan/.flexget/history.txt
+          - sed -i '1 i\{{title}}' /home/pi/.flexget/history.txt
 
   cleanup:
     priority: 5
