@@ -1,12 +1,11 @@
-#####
-#
 series:
-  anime:
+  shows:
+  
+# anime in s00e00 format  
     - Spy x Family
     - Made in Abyss
     - Yuru Camp
-
-  shows:
+    
 # Not yet on showrss
 
     - Gardeners World
@@ -19,9 +18,9 @@ series:
     - Where We Call Home
     - Inn The Works
     - The Lost Kitchen
-  
     - Loot
-    - She-Hulk Attorney at Law
+
+- She-Hulk Attorney at Law
     - Andor
     - Paper Girls
 
@@ -34,9 +33,3 @@ series:
       quality: webrip+ 720p-1080p
       specials: yes
       season_packs: no
-    anime:
-      identified_by: sequence
-      target: 1080p
-      quality: 720p-1080p
-      special_ids:
-        - OVA
