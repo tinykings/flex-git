@@ -37,7 +37,7 @@ tasks:
       main_file_only: yes
       username: transmission
       password: transmission
-      path: "/data/media"
+      path: "/data/series"
     exec:
       on_output:
         for_accepted:
@@ -56,9 +56,10 @@ tasks:
       host: 192.168.1.15
       port: 9091
       main_file_only: yes
+      content_filename: "{{series_name}} - {{series_id}}"
       username: transmission
       password: transmission
-      path: "/data/media"
+      path: "/data/series"
     exec:
       on_output:
         for_accepted:
