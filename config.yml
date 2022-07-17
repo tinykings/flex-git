@@ -26,8 +26,8 @@ tasks:
         for_accepted:
           - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
-#      on_exit:
-#        phase: find /home/pi/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
+      on_exit:
+        phase: find /home/pi/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
 # Showrss profile rss
   showrss:
@@ -77,14 +77,10 @@ tasks:
         phase:
           - sh /home/pi/.flexget/movies.sh
 
-
+# Search for movies
   download-movies:
     priority: 6
     quality: webrip+
-#    magnets: yes
-#    convert_magnet:
-#      timeout: 10 seconds
-#      force: yes
     discover:
       release_estimations: loose
       interval: 15 minutes
@@ -108,7 +104,8 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/movies"
-      
+ 
+# Remove completed from transmission
   cleanup:
     priority: 10
     delay: 23 hours
