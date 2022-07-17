@@ -7,7 +7,7 @@ tasks:
       on_exit:        
         phase:
           - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add history.txt movies.txt > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add * > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
