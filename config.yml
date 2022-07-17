@@ -52,7 +52,6 @@ tasks:
       - rss: { url: 'https://torrentgalaxy.to/rss?cat=41', silent: yes }
       - rss: { url: 'https://nyaa.si/?page=rss&c=1_2', silent: yes }
       - rss: { url: 'https://rarbg.to/rssdd.php?category=1;18;41;49', silent: yes }
-      - rss: https://nyaa.si/?page=rss&q=Lycoris+Recoil+s01&c=1_2&f=0
     transmission:
       host: 192.168.1.15
       port: 9091
