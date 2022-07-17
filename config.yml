@@ -7,7 +7,7 @@ tasks:
       on_exit:        
         phase:
           - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add history.txt > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add history.txt movies.txt > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
@@ -64,9 +64,48 @@ tasks:
       on_output:
         for_accepted:
           - sed -i '1 i\{{title}}' /home/pi/.flexget/history.txt
-
-  cleanup:
+          
+  movie-list:
     priority: 5
+    exec:
+      on_exit:
+        phase:
+          - xargs -0 -n 1 flexget movie-list add < <(tr \\n \\0 </home/pi/.flexget/movies.txt)
+          - > /home/pi/.flexget/movies.txt
+        
+  download-movies:
+    priority: 6
+    quality: webrip+
+    magnets: yes
+    convert_magnet:
+      timeout: 10 seconds
+      force: yes
+    discover:
+      release_estimations: loose
+      interval: 15 minutes
+      what:
+        - movie_list: movies
+      from:
+        - piratebay:
+            category: highres movies
+        - limetorrents:
+            category: movies
+        - rarbg:
+            category: [14, 17, 44, 45, 48]
+        - yts: true
+    list_match:
+      from:
+        - movie_list: movies
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      main_file_only: yes
+      username: transmission
+      password: transmission
+      path: "/data/movies"
+      
+  cleanup:
+    priority: 10
     delay: 23 hours
     disable:
       - seen
