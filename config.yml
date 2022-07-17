@@ -7,7 +7,7 @@ tasks:
       on_exit:        
         phase:
           - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add history.txt > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add history.txt movies.txt > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
@@ -70,19 +70,15 @@ tasks:
     exec:
       on_exit:
         phase:
-          - xargs -0 -n 1 flexget movie-list add < <(tr \\n \\0 </home/pi/.flexget/movies.txt)
-          - > /home/pi/.flexget/movies.txt
-          - cd /home/pi/.flexget/ && git add movies.txt > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
+          - sh /home/pi/.flexget/movies.sh
         
   download-movies:
     priority: 6
     quality: webrip+
-    magnets: yes
-    convert_magnet:
-      timeout: 10 seconds
-      force: yes
+#    magnets: yes
+#    convert_magnet:
+#      timeout: 10 seconds
+#      force: yes
     discover:
       release_estimations: loose
       interval: 15 minutes
