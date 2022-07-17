@@ -76,7 +76,8 @@ tasks:
       on_exit:
         phase:
           - sh /home/pi/.flexget/movies.sh
-        
+
+
   download-movies:
     priority: 6
     quality: webrip+
