@@ -1,6 +1,6 @@
-#
 tasks:
 
+# Sync updates to files.
   backup:
     priority: 1
     accept_all: yes
@@ -12,8 +12,9 @@ tasks:
           - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
+# Cleanvid (https://github.com/mmguero/cleanvid) new files.
   clean:
-    priority: 1
+    priority: 2
     filesystem:
       path: "/home/pi/media"
       recursive: yes
@@ -28,8 +29,9 @@ tasks:
 #      on_exit:
 #        phase: find /home/pi/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
+# Showrss profile rss
   showrss:
-    priority: 2
+    priority: 3
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     transmission:
@@ -44,6 +46,7 @@ tasks:
         for_accepted:
           - sed -i '1 i\{{title}}' /home/pi/.flexget/history.txt
 
+# Other series/anime from the series.yml file
   otherrss:
     priority: 3
     include: series.yml
@@ -65,7 +68,8 @@ tasks:
       on_output:
         for_accepted:
           - sed -i '1 i\{{title}}' /home/pi/.flexget/history.txt
-          
+
+# Script to import each line of movies.txt
   movie-list:
     priority: 5
     exec:
