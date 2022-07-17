@@ -50,7 +50,7 @@ tasks:
       - rss: { url: 'https://eztv.re/ezrss.xml', silent: yes }
       - rss: { url: 'https://www.limetorrents.info/rss/20/', silent: yes }
       - rss: { url: 'https://torrentgalaxy.to/rss?cat=41', silent: yes }
-      - rss: { url: 'https://nyaa.si/?page=rss&c=1_2', silent: yes }
+      - rss: { url: 'https://nyaa.si/?page=rss&q=s0&c=1_2&f=0', silent: yes }
       - rss: { url: 'https://rarbg.to/rssdd.php?category=1;18;41;49', silent: yes }
     transmission:
       host: 192.168.1.15
