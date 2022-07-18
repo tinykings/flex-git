@@ -104,6 +104,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/movies"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1 i\{{title}}' /home/pi/.flexget/history.txt
  
 # Remove completed from transmission
   cleanup:
