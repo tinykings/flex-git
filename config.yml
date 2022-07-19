@@ -69,17 +69,10 @@ tasks:
         for_accepted:
           - sed -i '1 i\{{title}}' /home/pi/.flexget/history.txt
 
-# Script to import each line of movies.txt
-  movie-list:
-    priority: 5
-    exec:
-      on_exit:
-        phase:
-          - cd /home/pi/.flexget && while read in; do flexget movie-list add "$in"; done < movies.txt && > movies.txt
-
 # Check for new releases
   check-new-movies:
-    priority: 6
+    priority: 5
+    delay: 3 days
     imdb_lookup: yes
     trakt_list:
       username: giladg
@@ -95,9 +88,16 @@ tasks:
         - PG-13
     exec:
       on_exit:
+        for_accepted:
+          - echo {{title}} >> /home/pi/.flexget/movies.txt
+
+# Script to import each line of movies.txt
+  movie-list:
+    priority: 6
+    exec:
+      on_exit:
         phase:
-#          - cd /home/pi/.flexget && while read in; do flexget movie-list add "$in"; done < movies.txt && > movies.txt
-          - echo "{{ title }}"
+          - cd /home/pi/.flexget && while read in; do flexget movie-list add "$in"; done < movies.txt && > movies.txt
 
 # Search for movies
   download-movies:
