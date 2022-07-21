@@ -40,7 +40,7 @@ tasks:
       main_file_only: yes
       username: transmission
       password: transmission
-      path: "/data/series"
+      path: "/data/series/{{series_name}}"
     exec:
       on_output:
         for_accepted:
@@ -63,7 +63,7 @@ tasks:
       content_filename: "{{series_name}} - {{series_id}}"
       username: transmission
       password: transmission
-      path: "/data/series"
+      path: "/data/series/{{series_name}}"
     exec:
       on_output:
         for_accepted:
