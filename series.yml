@@ -32,7 +32,7 @@ series:
   settings:
     shows:
       identified_by: ep
-      target: hdtv+ 1080p
-      quality: webrip+ 720p-1080p
+#      target: hdtv+ 1080p
+#      quality: webrip+ 720p-1080p
       specials: yes
       season_packs: no
