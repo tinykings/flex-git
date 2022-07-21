@@ -44,7 +44,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\{{title}}' /home/pi/.flexget/README.md
+          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
 
 # Other series/anime from the series.yml file
   otherrss:
@@ -67,7 +67,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\{{title}}' /home/pi/.flexget/README.md
+          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
 
 # Script to import each line of movies.txt
   movie-list:
@@ -107,7 +107,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\{{title}}' /home/pi/.flexget/README.md
+          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
  
 # Check for new releases
   check-new-movies:
