@@ -1,3 +1,6 @@
+###### The Sandman S01E03 AAC MP4-Mobile <br>
+###### The Sandman S01E05 AAC MP4-Mobile <br>
+###### The Sandman S01E04 AAC MP4-Mobile <br>
 ###### The Sandman S01E02 1080p WEB H264-PECULATE <br>
 ###### The Sandman S01E01 1080p WEB H264-CAKES <br>
 ###### Trying S03E04 720p HEVC x265-MeGusta <br>
