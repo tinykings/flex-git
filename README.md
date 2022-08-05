@@ -1,3 +1,5 @@
+###### The Sandman S01E02 1080p WEB H264-PECULATE <br>
+###### The Sandman S01E01 1080p WEB H264-CAKES <br>
 ###### Trying S03E04 720p HEVC x265-MeGusta <br>
 ###### Surface 2022 S01E04 480p x264-mSD <br>
 ###### For All Mankind S03E09 1080p WEB H264 GLHF <br>
