@@ -1,3 +1,7 @@
+###### Trying S03E04 720p HEVC x265-MeGusta <br>
+###### Surface 2022 S01E04 480p x264-mSD <br>
+###### For All Mankind S03E09 1080p WEB H264 GLHF <br>
+###### Loot S01E09 720p WEB h264 KOGi <br>
 ###### [Judas] Lycoris Recoil - S01E05 [1080p][HEVC x265 10bit][Multi-Subs] (Weekly) <br>
 ###### [EMBER] Made in Abyss S02E05 [1080p] [HEVC WEBRip DDP] (Made in Abyss: Retsujitsu no Ougonkyou) <br>
 ###### For All Mankind S03E07 720p WEB H264 GGEZ <br>
