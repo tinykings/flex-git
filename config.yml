@@ -13,20 +13,29 @@ tasks:
           - cd /home/ryan/flexget/ && git push origin main > /dev/null 2>&1
 
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
-  clean:
+  moveSeries:
     priority: 2
+    disable:
+      - seen
+      - seen_info_hash
+      - retry_failed
+    metainfo_series: yes
+    tvmaze_lookup: yes
+    parsing:
+      series: guessit
     filesystem:
-      path:
-        - /mnt/d/Series
-        - /mnt/d/Movies
+      path: /mnt/d/Download/series
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
+    move:
+      to: "/mnt/d/Series/{{tvmaze_series_name}}"
+      rename: "{{tvmaze_series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}{% if tvmaze_episode_name|default(False) %} - {{tvmaze_episode_name|pathscrub}}{% endif %}{% if quality|default(False) %} - [{{quality}}]{% endif %}"
     accept_all: yes
     exec:
       on_output:
         for_accepted:
-          - /home/ryan/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
+          - /home/ryan/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /mnt/d/Scripts/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
 
 # Showrss profile rss
