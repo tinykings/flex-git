@@ -32,6 +32,10 @@ tasks:
 # Showrss profile rss
   showrss:
     priority: 3
+    magnets: yes
+    convert_magnet:
+      timeout: 10 seconds
+      force: yes
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     download: /mnt/d/Download/series
@@ -39,6 +43,10 @@ tasks:
 # Other series/anime from the series.yml file
   otherrss:
     priority: 3
+    magnets: yes
+    convert_magnet:
+      timeout: 10 seconds
+      force: yes
     include: series.yml
     inputs:
       - rss: { url: 'https://eztv.re/ezrss.xml', silent: yes }
