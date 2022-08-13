@@ -1,0 +1,11 @@
+secrets.yml
+*log*
+*sqlite*
+plugins/*.pyc
+received/
+temp/
+converted/
+*test*
+trakt*
+anidb*
+crash_report*
