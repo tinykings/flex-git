@@ -9,3 +9,4 @@ converted/
 trakt*
 anidb*
 crash_report*
+.config-lock
