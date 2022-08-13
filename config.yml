@@ -40,10 +40,6 @@ tasks:
       username: admin
       password: admin123
       path: "/mnt/d/Series/{{series_name}}"
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i '1 i\###### {{title}} <br>' /home/ryan/flexget/README.md
 
 # Other series/anime from the series.yml file
   otherrss:
@@ -61,9 +57,5 @@ tasks:
       username: admin
       password: admin123
       path: "/mnt/d/Series/{{series_name}}"
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i '1 i\###### {{title}} <br>' /home/ryan/flexget/README.md
 
 
