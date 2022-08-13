@@ -35,6 +35,10 @@ tasks:
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     qbittorrent:
+      host: 192.168.112
+      port: 8080
+      username: admin
+      password: admin123
       path: "/mnt/d/Series/{{series_name}}"
 
 # Other series/anime from the series.yml file
