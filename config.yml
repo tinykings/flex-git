@@ -7,16 +7,18 @@ tasks:
     exec:
       on_exit:        
         phase:
-          - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add * > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
+          - cd /home/ryan/flexget/ && git pull > /dev/null 2>&1
+          - cd /home/ryan/flexget/ && git add * > /dev/null 2>&1
+          - cd /home/ryan/flexget/ && git commit -m "update" > /dev/null 2>&1
+          - cd /home/ryan/flexget/ && git push origin main > /dev/null 2>&1
 
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
   clean:
     priority: 2
     filesystem:
-      path: "/home/pi/media"
+      path:
+        - /mnt/d/Series
+        - /mnt/d/Movies
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -24,27 +26,24 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - /usr/local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
+          - /home/ryan/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
-      on_exit:
-        phase: find /home/pi/media/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
 # Showrss profile rss
   showrss:
     priority: 3
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
-    transmission:
-      host: 192.168.1.15
-      port: 9091
-      main_file_only: yes
-      username: transmission
-      password: transmission
-      path: "/data/series/{{series_name}}"
+    qbittorrent:
+      host: 127.0.0.1
+      port: 8080
+      username: admin
+      password: admin123
+      path: "/mnt/d/Series/{{series_name}}"
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\###### {{title}} <br>' /home/ryan/flexget/README.md
 
 # Other series/anime from the series.yml file
   otherrss:
@@ -56,40 +55,15 @@ tasks:
       - rss: { url: 'https://torrentgalaxy.to/rss?cat=41', silent: yes }
       - rss: { url: 'https://nyaa.si/?page=rss&q=s0&c=1_2&f=0', silent: yes }
       - rss: { url: 'https://rarbg.to/rssdd.php?category=1;18;41;49', silent: yes }
-    transmission:
-      host: 192.168.1.15
-      port: 9091
-      main_file_only: yes
-      content_filename: "{{series_name}} - {{series_id}}"
-      username: transmission
-      password: transmission
-      path: "/data/series/{{series_name}}"
+    qbittorrent:
+      host: 127.0.0.1
+      port: 8080
+      username: admin
+      password: admin123
+      path: "/mnt/d/Series/{{series_name}}"
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\###### {{title}} <br>' /home/ryan/flexget/README.md
 
 
-# Remove completed from transmission
-  cleanup:
-    priority: 10
-    delay: 23 hours
-    disable:
-      - seen
-      - seen_info_hash
-      - retry_failed
-    from_transmission:
-      host: 192.168.1.15
-      port: 9091
-      username: transmission
-      password: transmission
-    accept_all: yes
-    if:
-      - transmission_date_done == None: fail
-      - not transmission_seed_ratio_ok and not transmission_idle_limit_ok: reject
-    transmission:
-      host: 192.168.1.15
-      port: 9091
-      username: transmission
-      password: transmission
-      action: remove

@@ -1,0 +1,12 @@
+2022-08-12 21:06:38 ERROR    stevedore.extension                 Could not load 'addic7ed': unexpected indent (addic7ed.py, line 234)
+2022-08-12 21:06:39 VERBOSE  manager                       Creating new database /home/ryan/flexget/db-config.sqlite - DO NOT INTERRUPT ...
+2022-08-12 21:06:41 CRITICAL manager                       [/tasks/clean/filesystem/path/1] `/mnt/d/Movies` does not exist
+2022-08-12 21:06:41 CRITICAL manager                       Failed to load config file: Did not pass schema validation.
+2022-08-12 21:06:59 ERROR    stevedore.extension                 Could not load 'addic7ed': unexpected indent (addic7ed.py, line 234)
+2022-08-12 21:07:00 VERBOSE  task_queue                    There are 1 tasks to execute. Shutdown will commence when they have completed.
+2022-08-12 21:07:00 WARNING  details       backup          Task didn't produce any entries. This is likely due to a mis-configured or non-functional input.
+2022-08-12 21:07:00 VERBOSE  details       backup          Summary - Accepted: 0 (Rejected: 0 Undecided: 0 Failed: 0)
+2022-08-12 21:07:00 VERBOSE  exec          backup          Executing: cd /home/ryan/flexget/ && git pull > /dev/null 2>&1
+2022-08-12 21:07:01 VERBOSE  exec          backup          Executing: cd /home/ryan/flexget/ && git add * > /dev/null 2>&1
+2022-08-12 21:07:01 VERBOSE  exec          backup          Executing: cd /home/ryan/flexget/ && git commit -m "update" > /dev/null 2>&1
+2022-08-12 21:07:01 VERBOSE  exec          backup          Executing: cd /home/ryan/flexget/ && git push origin main > /dev/null 2>&1
