@@ -35,10 +35,6 @@ tasks:
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     qbittorrent:
-      host: 127.0.0.1
-      port: 8080
-      username: admin
-      password: admin123
       path: "/mnt/d/Series/{{series_name}}"
 
 # Other series/anime from the series.yml file
@@ -52,10 +48,6 @@ tasks:
       - rss: { url: 'https://nyaa.si/?page=rss&q=s0&c=1_2&f=0', silent: yes }
       - rss: { url: 'https://rarbg.to/rssdd.php?category=1;18;41;49', silent: yes }
     qbittorrent:
-      host: 127.0.0.1
-      port: 8080
-      username: admin
-      password: admin123
       path: "/mnt/d/Series/{{series_name}}"
 
 
