@@ -39,8 +39,7 @@ tasks:
       port: 8080
       username: admin
       password: admin123
-      path: "/mnt/d/Series/{{series_name}}"
-
+      path: "D:/Series/{{series_name}}"
 # Other series/anime from the series.yml file
   otherrss:
     priority: 3
@@ -52,6 +51,8 @@ tasks:
       - rss: { url: 'https://nyaa.si/?page=rss&q=s0&c=1_2&f=0', silent: yes }
       - rss: { url: 'https://rarbg.to/rssdd.php?category=1;18;41;49', silent: yes }
     qbittorrent:
-      path: "/mnt/d/Series/{{series_name}}"
-
-
+      host: 192.168.112
+      port: 8080
+      username: admin
+      password: admin123
+      path: "D:/Series/{{series_name}}"
