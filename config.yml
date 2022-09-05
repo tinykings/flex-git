@@ -7,44 +7,40 @@ tasks:
     exec:
       on_exit:        
         phase:
-          - cd 'c:\Users\ryan\flexget' & git pull
-          - cd 'c:\Users\ryan\flexget' & git add *
-          - cd 'c:\Users\ryan\flexget' & git commit -m "update"
-          - cd 'c:\Users\ryan\flexget' & git push origin main
+          - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add * > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
-  moveSeries:
+  clean:
     priority: 2
-    disable:
-      - seen
-      - seen_info_hash
-      - retry_failed
-    metainfo_series: yes
-    tvmaze_lookup: yes
-    parsing:
-      series: guessit
     filesystem:
-      path: 'd:\Download'
+      path: "/home/pi/series"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
-    move:
-      to: 'd:\Series\{{series_name}}'
-      rename: "{{series_name|escape|replace('&#39;', '')|pathscrub}} - {{series_id}}{% if tvmaze_episode_name|default(False) %} - {{tvmaze_episode_name|pathscrub}}{% endif %}{% if quality|default(False) %} - [{{quality}}]{% endif %}"
     accept_all: yes
     exec:
       on_output:
         for_accepted:
-          - cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w 'd:\Scripts\swears.txt' -e
+          - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
+      on_exit:
+        phase: find /home/pi/series/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
 # Showrss profile rss
   showrss:
     priority: 3
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
-    qbittorrent: 
-      path: 'd:\Download\series\{{series_name}}'
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      main_file_only: yes
+      username: transmission
+      password: transmission
+      path: "/data/series/{{series_name}}"
 
 # Other series/anime from the series.yml file
   otherrss:
@@ -56,5 +52,35 @@ tasks:
       - rss: { url: 'https://torrentgalaxy.to/rss?cat=41', silent: yes }
       - rss: { url: 'https://nyaa.si/?page=rss&q=s0&c=1_2&f=0', silent: yes }
       - rss: { url: 'https://rarbg.to/rssdd.php?category=1;18;41;49', silent: yes }
-    qbittorrent: 
-      path: 'd:\Download\series\{{series_name}}'
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      main_file_only: yes
+      content_filename: "{{series_name}} - {{series_id}}"
+      username: transmission
+      password: transmission
+      path: "/data/series"
+
+# Remove completed from transmission
+  cleanup:
+    priority: 10
+    delay: 23 hours
+    disable:
+      - seen
+      - seen_info_hash
+      - retry_failed
+    from_transmission:
+      host: 192.168.1.15
+      port: 9091
+      username: transmission
+      password: transmission
+    accept_all: yes
+    if:
+      - transmission_date_done == None: fail
+      - not transmission_seed_ratio_ok and not transmission_idle_limit_ok: reject
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      username: transmission
+      password: transmission
+      action: remove
