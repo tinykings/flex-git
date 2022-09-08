@@ -1,11 +1,5 @@
 series:
   shows:
-  
-# anime in s00e00 format  
-    - Spy x Family
-    - Made in Abyss
-    - Yuru Camp
-    - Kaguya-sama wa Kokurasetai
     
 # Not yet on showrss
 
@@ -30,7 +24,5 @@ series:
   settings:
     shows:
       identified_by: ep
-#      target: hdtv+ 1080p
-#      quality: webrip+ 720p-1080p
       specials: yes
       season_packs: no
