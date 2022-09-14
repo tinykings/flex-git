@@ -14,10 +14,15 @@ series:
     - Inn The Works
     - The Lost Kitchen
     
+# New Shows
     - Andor
     - Quantum Leap 2022
     - Alaska Daily
     - The English
+
+# Search for older episodes
+    - Schitts Creek:
+        begin: S03E01
 
   settings:
     shows:
