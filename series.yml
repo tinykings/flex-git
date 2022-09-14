@@ -2,15 +2,11 @@ series:
   shows:
   
 # anime in s00e00 format  
-    - Spy x Family:
-        begin: S01E05
-    - Made in Abyss:
-        begin: S02E02
+    - Spy x Family
+    - Made in Abyss
     - Yuru Camp
     - Kaguya-sama wa Kokurasetai
-        begin: S03E01
-    - Lycoris Recoil:
-        begin: S01E05
+    - Lycoris Recoil
     
 # Not yet on showrss
     - Gardeners World
@@ -29,10 +25,6 @@ series:
     - Quantum Leap 2022
     - Alaska Daily
     - The English
-
-# Search for older episodes
-    - Schitts Creek:
-        begin: S03E01
 
   settings:
     shows:

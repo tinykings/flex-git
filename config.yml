@@ -67,38 +67,6 @@ tasks:
         for_accepted:
           - sed -i '1i {{title}}' /home/pi/.flexget/history.log
 
-##### Search for episodes
-  show_search:
-    delay: 6 hours
-    include: series.yml
-    discover:
-      release_estimations: ignore
-      interval: 5 minutes
-      what:
-        - next_series_episodes: yes
-      from:
-        - piratebay:
-            category: highres tv
-        - limetorrents:
-            category: tv
-        - rarbg:
-            category: [2, 18, 41, 49]
-        - nyaa:
-            category: anime eng
-            filter: all
-    transmission:
-      host: 192.168.1.15
-      port: 9091
-      main_file_only: yes
-      content_filename: "{{series_name}} - {{series_id}}"
-      username: transmission
-      password: transmission
-      path: "/data/series/{{series_name}}"
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i '1i {{title}}' /home/pi/.flexget/history.log
-
 # Remove completed from transmission
   cleanup:
     delay: 23 hours
