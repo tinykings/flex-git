@@ -30,8 +30,7 @@ tasks:
         phase: find /home/pi/series/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
 # Showrss profile rss
-  showrss:
-    priority: 3
+  rss_shows:
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     transmission:
@@ -43,15 +42,15 @@ tasks:
       path: "/data/series/{{series_name}}"
 
 # Other series/anime from the series.yml file
-  otherrss:
-    priority: 3
+  rss_other:
     include: series.yml
     inputs:
-      - rss: { url: 'https://eztv.re/ezrss.xml', silent: yes }
-      - rss: https://eztv.unblockit.cat/ezrss.xml
-      - rss: { url: 'https://www.limetorrents.info/rss/20/', silent: yes }
-      - rss: { url: 'https://torrentgalaxy.to/rss?cat=41', silent: yes }
-      - rss: { url: 'https://rarbg.to/rssdd.php?category=1;18;41;49', silent: yes }
+      - rss: https://eztv.re/ezrss.xml
+      - rss: https://www.limetorrents.info/rss/20/
+      - rss: https://torrentgalaxy.to/rss?cat=41
+      - rss: https://rarbg.to/rssdd.php?category=1;18;41;49
+      - rss: https://nyaa.si/?page=rss&q=s0&c=1_2&f=0
+
     transmission:
       host: 192.168.1.15
       port: 9091
@@ -59,11 +58,38 @@ tasks:
       content_filename: "{{series_name}} - {{series_id}}"
       username: transmission
       password: transmission
-      path: "/data/series"
+      path: "/data/series/{{series_name}}"
+
+##### Search for episodes
+  show_search:
+    delay: 6 hours
+    include: series.yml
+    discover:
+      release_estimations: ignore
+      interval: 5 minutes
+      what:
+        - next_series_episodes: yes
+      from:
+        - piratebay:
+            category: highres tv
+        - limetorrents:
+            category: tv
+        - rarbg:
+            category: [2, 18, 41, 49]
+        - nyaa:
+            category: anime eng
+            filter: all
+    transmission:
+      host: 192.168.1.15
+      port: 9091
+      main_file_only: yes
+      content_filename: "{{series_name}} - {{series_id}}"
+      username: transmission
+      password: transmission
+      path: "/data/series/{{series_name}}"
 
 # Remove completed from transmission
   cleanup:
-    priority: 10
     delay: 23 hours
     disable:
       - seen
