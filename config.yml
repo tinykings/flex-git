@@ -26,7 +26,6 @@ tasks:
         for_accepted:
           - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
-          - sed -i '1i {{title}}' /home/pi/.flexget/history.log
       on_exit:
         phase: find /home/pi/series/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
@@ -41,6 +40,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/series/{{series_name}}"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1i {{title}}' /home/pi/.flexget/history.log
 
 # Other series/anime from the series.yml file
   rss_other:
@@ -59,6 +62,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/series/{{series_name}}"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1i {{title}}' /home/pi/.flexget/history.log
 
 ##### Search for episodes
   show_search:
@@ -87,6 +94,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/series/{{series_name}}"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1i {{title}}' /home/pi/.flexget/history.log
 
 # Remove completed from transmission
   cleanup:
