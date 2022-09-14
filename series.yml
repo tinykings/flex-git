@@ -2,11 +2,15 @@ series:
   shows:
   
 # anime in s00e00 format  
-    - Spy x Family
-    - Made in Abyss
+    - Spy x Family:
+        begin: S01E05
+    - Made in Abyss:
+        begin: S02E02
     - Yuru Camp
     - Kaguya-sama wa Kokurasetai
-    - Lycoris Recoil
+        begin: S03E01
+    - Lycoris Recoil:
+        begin: S01E05
     
 # Not yet on showrss
     - Gardeners World
