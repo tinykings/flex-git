@@ -16,7 +16,7 @@ tasks:
   clean:
     priority: 2
     filesystem:
-      path: "/home/pi/series"
+      path: "/home/pi/series/completed"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -26,8 +26,6 @@ tasks:
         for_accepted:
           - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
-      on_exit:
-        phase: find /home/pi/series/ -name "*.srt" -type f -delete > /dev/null 2>&1
 
 # Showrss profile rss
   rss_shows:
@@ -39,11 +37,7 @@ tasks:
       main_file_only: yes
       username: transmission
       password: transmission
-      path: "/data/series/{{series_name}}"
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i '1i {{title}}' /home/pi/.flexget/history.log
+      path: "/data/completed/{{series_name}}"
 
 # Other series/anime from the series.yml file
   rss_other:
@@ -61,11 +55,7 @@ tasks:
       content_filename: "{{series_name}} - {{series_id}}"
       username: transmission
       password: transmission
-      path: "/data/series/{{series_name}}"
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i '1i {{title}}' /home/pi/.flexget/history.log
+      path: "/data/completed/{{series_name}}"
 
 # Remove completed from transmission
   cleanup:
