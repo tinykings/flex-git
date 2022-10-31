@@ -8,7 +8,7 @@ tasks:
       on_exit:        
         phase:
           - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add config.yml series.yml README.md news.yml > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add config.yml series.yml README.md  > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
@@ -41,7 +41,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
 
 # Other series/anime from the series.yml file
   rss_other:
@@ -63,7 +63,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
 
 # Remove completed from transmission
   cleanup:
@@ -87,3 +87,37 @@ tasks:
       username: transmission
       password: transmission
       action: remove
+
+# News RSS generate HTML
+  news:
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1i [{{title}}]({{url}}) <br>' /home/pi/.flexget/README.md
+      on_exit:
+        phase:
+          - echo ### $(date) | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
+    manual: yes
+    disable: seen
+    accept_all: yes
+    inputs:
+    #tech
+      - rss: https://github.com/osmoscraft/osmosfeed/releases.atom
+      - rss: https://www.reddit.com/r/sysadmin/top.rss?t=week
+      - rss: https://www.reddit.com/r/apple/top.rss?t=week
+      - rss: https://www.bleepingcomputer.com/feed/
+      - rss: https://www.ghacks.net/feed/
+      - rss: https://krebsonsecurity.com/feed/
+      - rss: https://thesweetsetup.com/feed/
+      - rss: https://usesthis.com/feed.atom
+    #media
+      - rss: https://www.reddit.com/r/television/search.xml?q=flair_name%3A%22Premiere%22&amp;restrict_sr=1&amp;t=week
+      - rss: https://www.reddit.com/r/pcgaming/top.rss?t=week
+      - rss: https://www.reddit.com/r/steamdeck/top.rss?t=week
+      - rss: https://pitchfork.com/rss/reviews/best/albums/
+    #news
+      - rss: https://www.jw.org/en/news/jw/rss/NewsSubsectionRSSFeed/feed.xml
+      - rss: https://feeds.feedburner.com/StudyHacks
+    #ytrss
+      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCE_M8A5yxnLfW0KghEeajjw
+      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC0k238zFx-Z8xFH0sxCrPJg
