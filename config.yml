@@ -8,7 +8,7 @@ tasks:
       on_exit:        
         phase:
           - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add config.yml series.yml > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add config.yml series.yml README.md news.yml > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
@@ -38,6 +38,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/completed/{{series_name}}"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
 
 # Other series/anime from the series.yml file
   rss_other:
@@ -56,6 +60,10 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/completed/{{series_name}}"
+    exec:
+      on_output:
+        for_accepted:
+          - sed -i '1 i\###### {{title}} <br>' /home/pi/.flexget/README.md
 
 # Remove completed from transmission
   cleanup:
