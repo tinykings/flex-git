@@ -97,7 +97,7 @@ tasks:
 #      on_exit:
 #        phase:
 #          - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
-    delay: 3 hours
+#    delay: 3 hours
     accept_all: yes
     inputs:
     #tech
