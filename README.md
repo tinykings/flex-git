@@ -1,3 +1,13 @@
+### 11-01-2022
+Call of Duty: Modern Warfare 2 Is Missing Multiplayer Features at Launch - IGN Compete Fix <br>
+https://www.youtube.com/watch?v=0WoU5c60F4o <br>
+Happy Monday everyone! We’ve had a lot of esports news over the weekend. I’m Stella Chung and in today’s Compete Fix Call of Duty Modern Warfare 2’s multiplayer is missing big features at launch, League of Legends community is calling for a new Zeka Award for Worlds 2022, and there’s a new competitive Valorant Game Mode launching in Alpha soon!
+This may very well end up being my preferred way of playing Minecraft. This device continues to amaze me more and more. <br>
+https://www.reddit.com/r/SteamDeck/comments/yijhmw/this_may_very_well_end_up_being_my_preferred_way/ <br>
+<table> <tr><td> <a href="https://www.reddit.com/r/SteamDeck/comments/yijhmw/this_may_very_well_end_up_being_my_preferred_way/"> <img alt="This may very well end up being my preferred way of playing Minecraft. This device continues to amaze me more and more." src="https://preview.redd.it/1f8rbwuok6x91.jpg?width=640&crop=smart&auto=webp&s=d1ed08518adc99b4dc7c12750d6e5d2272253cac" title="This may very well end up being my preferred way of playing Minecraft. This device continues to amaze me more and more." /> </a> </td><td>   submitted by   <a href="https://www.reddit.com/user/TheHeroicBlockhead"> /u/TheHeroicBlockhead </a> <br /> <span><a href="https://i.redd.it/1f8rbwuok6x91.jpg">[link]</a></span>   <span><a href="https://www.reddit.com/r/SteamDeck/comments/yijhmw/this_may_very_well_end_up_being_my_preferred_way/">[comments]</a></span> </td></tr></table> <br>
+How to Organize Your Writing in Ulysses <br>
+https://thesweetsetup.com/how-to-organize-your-writing-in-ulysses/ <br>
+How to Organize Your Writing in Ulysses In addition to giving you a distraction-free writing interface to help you get your words out onto the page, Ulysses also gives you several tools that will help you keep your writing organized. Groups Ulysses allows you to keep your writing organized in your library by using groups. […] <br>
 [Call of Duty: Modern Warfare 2 Is Missing Multiplayer Features at Launch - IGN Compete Fix](https://www.youtube.com/watch?v=0WoU5c60F4o) <br>
 [This may very well end up being my preferred way of playing Minecraft. This device continues to amaze me more and more.](https://www.reddit.com/r/SteamDeck/comments/yijhmw/this_may_very_well_end_up_being_my_preferred_way/) <br>
 ### Mon 31 Oct 2022 11:23:09 PM GMT

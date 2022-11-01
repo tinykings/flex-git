@@ -93,7 +93,9 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1i [{{title}}]({{url}}) <br>' /home/pi/.flexget/README.md
+          - sed -i '1i {{description}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1i {{url}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1i {{title}} <br>' /home/pi/.flexget/README.md
       on_exit:
         phase:
           - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
