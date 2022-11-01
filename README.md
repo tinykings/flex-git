@@ -1,3 +1,5 @@
+[Call of Duty: Modern Warfare 2 Is Missing Multiplayer Features at Launch - IGN Compete Fix](https://www.youtube.com/watch?v=0WoU5c60F4o) <br>
+[This may very well end up being my preferred way of playing Minecraft. This device continues to amaze me more and more.](https://www.reddit.com/r/SteamDeck/comments/yijhmw/this_may_very_well_end_up_being_my_preferred_way/) <br>
 ### Mon 31 Oct 2022 11:23:09 PM GMT
 [Dragon boat zongzi~龙舟枕头粽，端午记得回家吃粽子 丨Liziqi Channel](https://www.youtube.com/watch?v=vusE2HqaAEY) <br>
 [The life of tomato~番茄………的一生？| 花开好了，果子熟了，蕃茄红了，蕃茄火锅走起！| Liziqi Channel](https://www.youtube.com/watch?v=u_Jx2pB7OZg) <br>

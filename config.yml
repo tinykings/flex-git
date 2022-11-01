@@ -96,7 +96,7 @@ tasks:
           - sed -i '1i [{{title}}]({{url}}) <br>' /home/pi/.flexget/README.md
       on_exit:
         phase:
-          - echo "### $(date)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
+          - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
     manual: yes
 #    disable: seen
     accept_all: yes
