@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ### 11-01-2022
 The RX 7900 XT looks CRISPY <br> [https://www.youtube.com/watch?v=9xB7XKh25cQ](https://www.youtube.com/watch?v=9xB7XKh25cQ) <br><br>
 this 3D printer is a BEAST <br> [https://www.youtube.com/watch?v=gg5bVf3_bmc](https://www.youtube.com/watch?v=gg5bVf3_bmc) <br><br>
@@ -22,6 +23,9 @@ Google ad for GIMP.org served info-stealing malware via lookalike site <br> [htt
 What's the most ridiculous line of BS you've heard from an ISV when setting up their application? <br> [https://www.reddit.com/r/sysadmin/comments/yd398y/whats_the_most_ridiculous_line_of_bs_youve_heard/](https://www.reddit.com/r/sysadmin/comments/yd398y/whats_the_most_ridiculous_line_of_bs_youve_heard/) <br><br>
 You have someone on the team who can communicate well and run a meeting well. Do what you can to keep them. <br> [https://www.reddit.com/r/sysadmin/comments/yivbul/you_have_someone_on_the_team_who_can_communicate/](https://www.reddit.com/r/sysadmin/comments/yivbul/you_have_someone_on_the_team_who_can_communicate/) <br><br>
 > Quantum Leap 2022 S01E07 720p HDTV x264 SYNCOPY <br>
+=======
+Quantum Leap 2022 S01E07 720p HDTV x264 SYNCOPY <br>
+>>>>>>> c3306fd16eafa4ec35e657fd7a3846137b3733a3
 ### 11-01-2022
 Inmates Are Pushing Back Against Working In U.S. Prisons <br> [https://www.youtube.com/watch?v=aUkpz_6YYbg](https://www.youtube.com/watch?v=aUkpz_6YYbg) <br><br>
 # 11-01-2022
