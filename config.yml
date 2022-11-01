@@ -1,7 +1,7 @@
 tasks:
 
 # Sync updates to files.
-  rss_backup:
+  backup:
     priority: 1
     accept_all: yes
     exec:
@@ -13,7 +13,7 @@ tasks:
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
-  rss_clean:
+  clean:
     priority: 2
     filesystem:
       path: "/home/pi/series/completed"
@@ -28,7 +28,7 @@ tasks:
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
 
 # Showrss profile rss
-  rss_shows:
+  showrss:
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     transmission:
@@ -41,10 +41,10 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\> {{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
 
 # Other series/anime from the series.yml file
-  rss_other:
+  other:
     include: series.yml
     inputs:
       - rss: https://eztv.re/ezrss.xml
@@ -63,10 +63,10 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\> {{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
 
 # Remove completed from transmission
-  rss_cleanup:
+  cleanup:
     delay: 23 hours
     disable:
       - seen
@@ -94,9 +94,10 @@ tasks:
       on_output:
         for_accepted:
           - sed -i "1i {{title}} <br> [{{url}}]({{url}}) <br><br>" /home/pi/.flexget/README.md
-      on_exit:
-        phase:
-          - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
+#      on_exit:
+#        phase:
+#          - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
+    delay: 3 hours
     accept_all: yes
     inputs:
     #tech
