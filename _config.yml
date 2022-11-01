@@ -1,4 +1,3 @@
-remote_theme: broccolini/swiss
-theme_color: black
+theme: jekyll-theme-hacker
 title: tinyking
 description: feed updates
