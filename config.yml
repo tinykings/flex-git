@@ -1,7 +1,7 @@
 tasks:
 
 # Sync updates to files.
-  backup:
+  rss_backup:
     priority: 1
     accept_all: yes
     exec:
@@ -13,7 +13,7 @@ tasks:
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
 
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
-  clean:
+  rss_clean:
     priority: 2
     filesystem:
       path: "/home/pi/series/completed"
@@ -41,7 +41,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\> {{title}} <br>' /home/pi/.flexget/README.md
 
 # Other series/anime from the series.yml file
   rss_other:
@@ -63,10 +63,10 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1 i\> {{title}} <br>' /home/pi/.flexget/README.md
 
 # Remove completed from transmission
-  cleanup:
+  rss_cleanup:
     delay: 23 hours
     disable:
       - seen
@@ -93,14 +93,10 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i '1i {{description}} <br>' /home/pi/.flexget/README.md
-          - sed -i '1i {{url}} <br>' /home/pi/.flexget/README.md
-          - sed -i '1i {{title}} <br>' /home/pi/.flexget/README.md
+          - sed -i '1i {{title}} <br> {{url}} <br>' /home/pi/.flexget/README.md
       on_exit:
         phase:
-          - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
-    manual: yes
-#    disable: seen
+          - echo "# $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
     accept_all: yes
     inputs:
     #tech
@@ -120,6 +116,7 @@ tasks:
     #news
       - rss: https://www.jw.org/en/news/jw/rss/NewsSubsectionRSSFeed/feed.xml
       - rss: https://feeds.feedburner.com/StudyHacks
+    #Youtube subs generated using https://github.com/anatolykopyl/youtube-cdl
     #ytrss
       - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCE_M8A5yxnLfW0KghEeajjw
       - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC0k238zFx-Z8xFH0sxCrPJg
