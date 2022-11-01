@@ -1,3 +1,4 @@
+> {{title}} <br>
 # 11-01-2022
 Call of Duty Is Never Leaving PlayStation - IGN The Daily Fix <br> https://www.youtube.com/watch?v=-fog9vCuIho <br>
 # 11-01-2022
