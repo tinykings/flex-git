@@ -1,9 +1,0 @@
-remote_theme: jekyll/minima
-minima:
-  skin: dark
-  date_format: "%b %-d, %Y"
-title: tinykings
-description: feed updates
-timezone: America/Los_Angeles
-
-#todo - reset readme each month
