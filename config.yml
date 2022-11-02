@@ -98,7 +98,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - sed -i "1i {{title}} <br> [{{url}}]({{url}}) <br> {{rss_pubdate}} <br><br>" /home/pi/.flexget/README.md
+          - sed -i "1i {{title}} <br> [{{url}}]({{url}}) <br> *{{rss_pubdate}}* <br><br>" /home/pi/.flexget/README.md
     delay: 3 hours
 #    disable: seen
     accept_all: yes
