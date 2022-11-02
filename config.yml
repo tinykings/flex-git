@@ -105,6 +105,7 @@ tasks:
     #tech
       - rss: https://www.reddit.com/r/sysadmin/top.rss?t=week
       - rss: https://www.reddit.com/r/apple/top.rss?t=week
+      - rss: https://www.reddit.com/r/technology/top.rss?t=week
       - rss: https://www.bleepingcomputer.com/feed/
       - rss: https://www.ghacks.net/feed/
       - rss: https://krebsonsecurity.com/feed/
@@ -118,6 +119,7 @@ tasks:
     #news
       - rss: https://www.jw.org/en/news/jw/rss/NewsSubsectionRSSFeed/feed.xml
       - rss: https://feeds.feedburner.com/StudyHacks
+      - rss: https://www.reddit.com/r/worldnews/top.rss?t=week
     #Youtube subs generated using https://github.com/anatolykopyl/youtube-cdl
     #ytrss
       - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCE_M8A5yxnLfW0KghEeajjw
