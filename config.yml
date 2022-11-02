@@ -27,10 +27,6 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/completed/{{series_name}}"
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
 
 # Other series/anime from the series.yml file
   other:
@@ -50,10 +46,6 @@ tasks:
       username: transmission
       password: transmission
       path: "/data/completed/{{series_name}}"
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i '1 i\{{title}} <br>' /home/pi/.flexget/README.md
 
 # Remove completed from transmission
   cleanup:
@@ -79,108 +71,14 @@ tasks:
       password: transmission
       action: remove
 
-
 # Sync updates to files.
   backup:
-    priority: 6
+    priority: 5
     accept_all: yes
     exec:
       on_exit:
         phase:
           - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add config.yml series.yml README.md  > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add config.yml series.yml > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
-
-# News RSS generate HTML
-  news:
-    priority: 5
-    exec:
-      on_output:
-        for_accepted:
-          - sed -i "1i {{title}} <br> [{{url}}]({{url}}) <br> *{{rss_pubdate}}* <br><br>" /home/pi/.flexget/README.md
-    delay: 3 hours
-    accept_all: yes
-    inputs:
-    #tech
-      - rss: https://www.reddit.com/r/sysadmin/top.rss?t=week
-      - rss: https://www.reddit.com/r/apple/top.rss?t=week
-      - rss: https://www.reddit.com/r/technology/top.rss?t=week
-      - rss: https://www.bleepingcomputer.com/feed/
-      - rss: https://www.ghacks.net/feed/
-      - rss: https://krebsonsecurity.com/feed/
-      - rss: https://thesweetsetup.com/feed/
-      - rss: https://usesthis.com/feed.atom
-    #media
-      - rss: https://www.reddit.com/r/television/search.xml?q=flair_name%3A%22Premiere%22&amp;restrict_sr=1&amp;t=week
-      - rss: https://www.reddit.com/r/pcgaming/top.rss?t=week
-      - rss: https://www.reddit.com/r/steamdeck/top.rss?t=week
-      - rss: https://pitchfork.com/rss/reviews/best/albums/
-    #news
-      - rss: https://www.jw.org/en/news/jw/rss/NewsSubsectionRSSFeed/feed.xml
-      - rss: https://feeds.feedburner.com/StudyHacks
-      - rss: https://www.reddit.com/r/worldnews/top.rss?t=week
-    #Youtube subs generated using https://github.com/anatolykopyl/youtube-cdl
-    #ytrss
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCE_M8A5yxnLfW0KghEeajjw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC0k238zFx-Z8xFH0sxCrPJg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC67f2Qf7FYhtoUIF4Sf29cA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCg3tygBbdzyLEZ4lPMpCAFw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCdHIPSWf3kkwNg9y_puaChA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCg6gPGh8HU2U01vaFCAsvmQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCcEH1uSjWiKpYp4B2lShqlA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCw3T7SvPYDHCkdMhC0NcKsw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC9-y-6csu5WGm29I7JiwpnA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCvojeegAFI1sIV1PLxFM43g
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCJ2wc4hCWI8bEki48Zv45fQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC9EX_PSbngZP8pkPWSUpPzw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCJ_2hNMxOzNjviJBiLWHMqg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC6_8mLw-CglRDk3y8HKGnNQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCJfJWct8jN1RpCuVWk3zHTA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCTjclUmbE2-4SmeEYY1hORQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC9PBzalIcEQCsiIkq36PyUA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCsCmDXLmyIMMOYnBTkoxF3A
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCUQo7nzH1sXVpzL92VesANw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC_0CVCfC_3iuHqmyClu59Uw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCvbiD-x3mDmQZRsJi8CnG0A
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCw1V3VC3xAzL66X4VwqaKlg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC8EQAfueDGNeqb1ALm0LjHA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCNvzD7Z-g64bPXxGzaQaa4g
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCm9lqWLMec4klbLEtUxKSbg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCv1Kcz-CuGM6mxzL3B1_Eiw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC2eEGT06FrWFU6VBnPOR9lg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC3s0BtrBJpwNDaflRSoiieQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC2oAso3hNDqYxgqEEP-Esrw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCEqU-Ts-hxmpnlWgRMgd2MQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UClqxWoHXKDX4PJtoZ8p_oLQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCDsElQQt_gCZ9LgnW-7v-cQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCXuqSBlHAE6Xw-yeJA0Tunw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC0KfjyvabuE2J-RBC6ko2Lw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCBJycsmduvYEL83R_U4JriQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCJ24N4O0bP7LGLBDvye7oCA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCKNSTo-vLM42mGzI44yea7Q
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCTvH45HvnOzqXvfNJqdc3xg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCB6PV0cvJpzlcXRG7nz6PpQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCiC38Llz5e3qR6EaQAGlWvw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC_zQ777U6YTyatP3P1wi3xw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC0fDG3byEcMtbOqPMymDNbw
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCPScG5Rbudi6fDv4CK1-LAQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCq2E1mIwUKMWzCA4liA_XGQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC5bKSAZBvV9AKlBJPG0Py-A
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC3fg6pL63upkXCc0T203wVg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCNofX8wmSJh7NTklvMqueOA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCZ7AeeVbyslLM_8-nVy2B8Q
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCO2x-p9gg9TLKneXlibGR7w
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC8aHr-F0qJ14-Win6Y8W4oQ
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCjSEJkpGbcZhvo0lr-44X_w
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCeeFfhMcJa1kjtfZAGskOCA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCohxEcQfz-r3zErohFQQrCg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCNFhYLDqxyjBBCV-1MUM5QA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCNZ1H42l5IzQFvIIJZYC08w
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCsm-uFE1pEJnmySSCRTStaA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UC4hSJgj8TMuOBmsgHRmE-VA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCX_nalhCljdSRS1j35NphYA
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCg0FSqPeiGD_lIiPaaAehQg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCsnGwSIHyoYN0kiINAGUKxg
-      - rss: https://www.youtube.com/feeds/videos.xml?channel_id=UCoC47do520os_4DBMEFGg4A
