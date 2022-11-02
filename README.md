@@ -1,3 +1,11 @@
+The Witcher Remake (and demake), Xbox price hikes and Dragon Age | This Week In Videogames <br> [https://www.youtube.com/watch?v=aUd1B6-0gyk](https://www.youtube.com/watch?v=aUd1B6-0gyk) <br> *2022-11-02 14:00:01* <br><br>
+AYA Neo 2 Hands-On, An All-New Ryzen 6800U Hand-Held That Changes Everything! <br> [https://www.youtube.com/watch?v=A79nuy31QqQ](https://www.youtube.com/watch?v=A79nuy31QqQ) <br> *2022-11-02 14:07:00* <br><br>
+How I Turn Packet Captures Into Network Maps Instantly With Teleseer (Demo Tutorial) <br> [https://www.youtube.com/watch?v=at7ePLucQp4](https://www.youtube.com/watch?v=at7ePLucQp4) <br> *2022-11-02 13:55:13* <br><br>
+Zelda Wind Waker 7+ hours of gameplay. insane! <br> [https://www.reddit.com/r/SteamDeck/comments/yfpoy6/zelda_wind_waker_7_hours_of_gameplay_insane/](https://www.reddit.com/r/SteamDeck/comments/yfpoy6/zelda_wind_waker_7_hours_of_gameplay_insane/) <br> *2022-10-28 14:29:27* <br><br>
+The Windows 11 Task Manager may soon have a search feature <br> [https://www.ghacks.net/2022/11/02/microsoft-is-working-on-adding-search-to-the-windows-task-manager/](https://www.ghacks.net/2022/11/02/microsoft-is-working-on-adding-search-to-the-windows-task-manager/) <br> *2022-11-02 14:01:59* <br><br>
+I'm getting really tired of all the internally built solutions I have to support. <br> [https://www.reddit.com/r/sysadmin/comments/ydzdhx/im_getting_really_tired_of_all_the_internally/](https://www.reddit.com/r/sysadmin/comments/ydzdhx/im_getting_really_tired_of_all_the_internally/) <br> *2022-10-26 14:23:27* <br><br>
+Documentary Now S04E04 1080p WEB h264 KOGi <br>
+Documentary Now S04E05 1080p WEB h264 KOGi <br>
 ReAgentC | The Windows Recovery Partition <br> [https://www.youtube.com/watch?v=L7Ss-KKp010](https://www.youtube.com/watch?v=L7Ss-KKp010) <br> *2022-11-02 13:15:03* <br><br>
 What's on this Week: Andor, Blockbuster, White Lotus, and more! <br> [https://www.youtube.com/watch?v=m66QJncH8D8](https://www.youtube.com/watch?v=m66QJncH8D8) <br> *2022-11-01 21:00:18* <br><br>
 Cybersecurity Leadership, CareerMistakes, and 13 Horror Stories for Cyber Halloween - BSW #283 <br> [https://www.youtube.com/watch?v=PBCh2Ipomdk](https://www.youtube.com/watch?v=PBCh2Ipomdk) <br> *2022-11-01 19:59:56* <br><br>
