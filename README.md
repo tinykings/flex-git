@@ -1,3 +1,4 @@
+La Brea S02E06 720p HDTV x264 SYNCOPY <br>
 If Xbox made a Retro Handheld [Logitech G Cloud] <br> [https://www.youtube.com/watch?v=mPXRP3ap-Ks](https://www.youtube.com/watch?v=mPXRP3ap-Ks) <br><br>
 Medical Doctor Answers Hormone Questions From Twitter | Tech Support | WIRED <br> [https://www.youtube.com/watch?v=OCjnQCJ4NWk](https://www.youtube.com/watch?v=OCjnQCJ4NWk) <br><br>
 Jennifer Coolidge and Jon Gries on returning to The White Lotus <br> [https://www.youtube.com/watch?v=75PpIqj1yKA](https://www.youtube.com/watch?v=75PpIqj1yKA) <br><br>
