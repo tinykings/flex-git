@@ -1,20 +1,8 @@
 tasks:
 
-# Sync updates to files.
-  backup:
-    priority: 1
-    accept_all: yes
-    exec:
-      on_exit:        
-        phase:
-          - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add config.yml series.yml README.md  > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
-
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
   clean:
-    priority: 2
+    priority: 1
     filesystem:
       path: "/home/pi/series/completed"
       recursive: yes
@@ -29,6 +17,7 @@ tasks:
 
 # Showrss profile rss
   showrss:
+    priority: 2
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     transmission:
@@ -45,6 +34,7 @@ tasks:
 
 # Other series/anime from the series.yml file
   other:
+    priority: 3
     include: series.yml
     inputs:
       - rss: https://eztv.re/ezrss.xml
@@ -67,6 +57,7 @@ tasks:
 
 # Remove completed from transmission
   cleanup:
+    priority: 4
     delay: 23 hours
     disable:
       - seen
@@ -88,16 +79,31 @@ tasks:
       password: transmission
       action: remove
 
+
+# Sync updates to files.
+  backup:
+    priority: 6
+    accept_all: yes
+    exec:
+      on_exit:
+        phase:
+          - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git add config.yml series.yml README.md  > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
+          - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
+
 # News RSS generate HTML
   news:
+    priority: 5
     exec:
       on_output:
         for_accepted:
-          - sed -i "1i {{title}} <br> [{{url}}]({{url}}) <br> `{{rss_pubdate}}` <br> *{{description}}* <br><br>" /home/pi/.flexget/README.md
-#      on_exit:
-#        phase:
-#          - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
+          - sed -i "1i {{title}} <br> [{{url}}]({{url}}) <br> {{rss_pubdate}} <br><br>" /home/pi/.flexget/README.md
+      on_exit:
+        phase:
+          - echo "### $(date +%m-%d-%Y)" | cat - /home/pi/.flexget/README.md > temp && mv temp /home/pi/.flexget/README.md
     delay: 3 hours
+#    disable: seen
     accept_all: yes
     inputs:
     #tech
