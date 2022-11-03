@@ -14,6 +14,7 @@ tasks:
         for_accepted:
           - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
+          - find "{{location}}"*.srt -type f -delete
 
 # Showrss profile rss
   showrss:
