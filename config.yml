@@ -4,7 +4,7 @@ tasks:
   clean:
     priority: 1
     filesystem:
-      path: "/home/pi/series/completed"
+      path: "/home/pi/downloads/complete"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -12,7 +12,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/swears.txt -e
+          - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/flexget/swears.txt -e
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
           - find "{{location}}"*.srt -type f -delete
 
@@ -22,12 +22,12 @@ tasks:
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     transmission:
-      host: 192.168.1.15
+      host: 192.168.0.53
       port: 9091
       main_file_only: yes
       username: transmission
       password: transmission
-      path: "/data/completed/{{series_name}}"
+      path: "/downloads/complete/{{series_name}}"
 
 # Other series/anime from the series.yml file
   other:
@@ -40,15 +40,15 @@ tasks:
       - rss: https://rarbg.to/rssdd.php?category=1;18;41;49
       - rss: https://nyaa.si/?page=rss&q=s0&c=1_2&f=0
     transmission:
-      host: 192.168.1.15
+      host: 192.168.0.53
       port: 9091
       main_file_only: yes
       content_filename: "{{series_name}} - {{series_id}}"
       username: transmission
       password: transmission
-      path: "/data/completed/{{series_name}}"
+      path: "/downloads/complete/{{series_name}}"
 
-# Remove completed from transmission
+# Remove complete from transmission
   cleanup:
     priority: 4
     delay: 23 hours
@@ -57,7 +57,7 @@ tasks:
       - seen_info_hash
       - retry_failed
     from_transmission:
-      host: 192.168.1.15
+      host: 192.168.0.53
       port: 9091
       username: transmission
       password: transmission
@@ -66,7 +66,7 @@ tasks:
       - transmission_date_done == None: fail
       - not transmission_seed_ratio_ok and not transmission_idle_limit_ok: reject
     transmission:
-      host: 192.168.1.15
+      host: 192.168.0.53
       port: 9091
       username: transmission
       password: transmission

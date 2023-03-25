@@ -3,6 +3,10 @@ series:
   
 # anime in s00e00 format  
     - Yuru Camp
+    - Made in Abyss
+    - Nier Automata
+    - Spy x Family
+    - Trigun Stamped
     
 # Not yet on showrss
     - Gardeners World
@@ -13,8 +17,8 @@ series:
     - Trying
     
 # New Shows
-    - Alaska Daily
-    - 1899
+    - The Peripheral
+    - Lucky Hank
 
   settings:
     shows:
