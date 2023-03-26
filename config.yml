@@ -3,12 +3,17 @@ tasks:
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
   clean:
     priority: 1
+    metainfo_series: yes
+    trakt_lookup: yes
+    tvmaze_lookup: yes
     filesystem:
       path: "/home/pi/downloads/complete"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
-    accept_all: yes
+    if:
+      - trakt_series_content_rating == 'TV-MA': accept
+      - "'anime' in trakt_genres": reject
     exec:
       on_output:
         for_accepted:
@@ -38,7 +43,8 @@ tasks:
       - rss: https://www.limetorrents.info/rss/20/
       - rss: https://torrentgalaxy.to/rss?cat=41
       - rss: https://rarbg.to/rssdd.php?category=1;18;41;49
-      - rss: https://nyaa.si/?page=rss&q=s0&c=1_2&f=0
+      - rss: https://nyaa.si/?page=rss&q=s01&c=1_2&f=0
+
     transmission:
       host: 192.168.0.53
       port: 9091
