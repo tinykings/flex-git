@@ -17,7 +17,7 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/flexget/swears.txt -e
+          - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/flexget/swears.txt -e -p 0
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
           - find "{{location}}"*.srt -type f -delete
 
