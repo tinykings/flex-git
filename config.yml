@@ -44,7 +44,6 @@ tasks:
       - rss: https://torrentgalaxy.to/rss?cat=41
       - rss: https://rarbg.to/rssdd.php?category=1;18;41;49
       - rss: https://nyaa.si/?page=rss&q=s01&c=1_2&f=0
-
     transmission:
       host: 192.168.0.53
       port: 9091
@@ -58,6 +57,7 @@ tasks:
   cleanup:
     priority: 4
     delay: 23 hours
+    no_entries_ok: yes
     disable:
       - seen
       - seen_info_hash
@@ -81,6 +81,7 @@ tasks:
 # Sync updates to files.
   backup:
     priority: 5
+    no_entries_ok: yes
     accept_all: yes
     exec:
       on_exit:
