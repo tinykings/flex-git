@@ -9,7 +9,6 @@ series:
     
 # Not yet on showrss
     - Gardeners World
-    - Night Sky
     - Sanditon
     - The Other One
     - The Yorkshire Vet
@@ -19,12 +18,12 @@ series:
     - Rabbit Hole
     - The Big Door Prize
     - Essex County
-    - Secret Invasion
     - Extrapolations
+    - Secret Invasion
     - Silo
 
   settings:
     shows:
       identified_by: ep
       specials: yes
-      season_packs: no
+      season_packs: yes
