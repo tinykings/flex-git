@@ -21,9 +21,9 @@ tasks:
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
       on_exit:
         phase:
-          - find /home/pi/downloads/complete/ -type f -name "\*.srt" -delete
-          - find /home/pi/downloads/complete/ -type f -name "\*.exe" -delete
-          - find /home/pi/downloads/complete/ -type f -name "\*.txt" -delete
+          - find /home/pi/downloads/complete/ -type f -name \*.srt -delete
+          - find /home/pi/downloads/complete/ -type f -name \*.exe -delete
+          - find /home/pi/downloads/complete/ -type f -name \*.txt -delete
 
 # Showrss profile rss
   showrss:
