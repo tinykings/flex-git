@@ -7,7 +7,7 @@ tasks:
     trakt_lookup: yes
     tvmaze_lookup: yes
     filesystem:
-      path: "/home/pi/downloads/complete"
+      path: "/home/pi/series"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -21,9 +21,9 @@ tasks:
           - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
       on_exit:
         phase:
-          - find /home/pi/downloads/complete/ -type f -name \*.srt -delete
-          - find /home/pi/downloads/complete/ -type f -name \*.exe -delete
-          - find /home/pi/downloads/complete/ -type f -name \*.txt -delete
+          - find /home/pi/series/ -type f -name \*.srt -delete
+          - find /home/pi/series/ -type f -name \*.exe -delete
+          - find /home/pi/series/ -type f -name \*.txt -delete
 
 # Showrss profile rss
   showrss:
@@ -31,12 +31,8 @@ tasks:
     rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
     all_series: yes
     transmission:
-      host: 192.168.0.53
-      port: 9091
+      host: localhost
       main_file_only: yes
-      username: transmission
-      password: transmission
-      path: "/downloads/complete/{{series_name}}"
 
 # Other series/anime from the series.yml file
   other:
@@ -49,12 +45,8 @@ tasks:
       - rss: https://rarbg.to/rssdd.php?category=1;18;41;49
       - rss: https://nyaa.si/?page=rss&q=s01&c=1_2&f=0
     transmission:
-      host: 192.168.0.53
-      port: 9091
+      host: localhost
       main_file_only: yes
-      username: transmission
-      password: transmission
-      path: "/downloads/complete/{{series_name}}"
 
 # Remove complete from transmission
   cleanup:
@@ -66,19 +58,13 @@ tasks:
       - seen_info_hash
       - retry_failed
     from_transmission:
-      host: 192.168.0.53
       port: 9091
-      username: transmission
-      password: transmission
     accept_all: yes
     if:
       - transmission_date_done == None: fail
       - not transmission_seed_ratio_ok and not transmission_idle_limit_ok: reject
     transmission:
-      host: 192.168.0.53
-      port: 9091
-      username: transmission
-      password: transmission
+      host: localhost
       action: remove
 
 # Sync updates to files.
