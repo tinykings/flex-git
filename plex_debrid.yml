@@ -5,7 +5,8 @@ tasks:
     trakt_lookup: yes
     tvmaze_lookup: yes
     filesystem:
-      path: "/home/pi/real_debrid/shows/"
+      path:
+        - "/home/pi/torrents/shows/"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -15,14 +16,15 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - cp "{{location}}" "/home/pi/edits/{{filename}}"
-          - cleanvid -i "/home/pi/edits/{{filename}}" -o "/home/pi/edits/{{filename}}_clean.mkv" -w /home/pi/flexget/swears.txt -e
-          - if [ -f "/home/pi/edits/{{filename}}_clean.mkv" ]; then rm "/home/pi/edits/{{filename}}"; else echo "nothing to clean"; fi
-          - rm "{{location}}"
+          - cp "{{location}}" "/home/pi/edits/{{series_name}}.{{series_id}}.mkv"
+          - cleanvid -i "/home/pi/edits/{{series_name}}.{{series_id}}.mkv" -o "/home/pi/edits/{{series_name}}.{{series_id}}_clean.mkv" -w /home/pi/.flexget/swears.txt -e -p 0
+          - if [ -f "/home/pi/edits/{{series_name}}.{{series_id}}_clean.mkv" ]; then rm "/home/pi/edits/{{series_name}}.{{series_id}}_clean.mkv"; else echo "nothing to clean"; fi
       on_exit:
-        phase: rm /home/pi/edits/*.srt
-        
+        for_accepted:
+          - rm "{{location}}"
+
   newmovies:
+    delay: 12 hours
     imdb_lookup: yes
     trakt_list:
       username: giladg
@@ -44,24 +46,4 @@ tasks:
           account: profile
           list: watchlist
           type: movies
-          
-  watched:
-    metainfo_series: yes
-    trakt_lookup:
-      username: profile
-      account: profile
-    filesystem:
-      path:
-        - "/home/pi/real_debrid/shows/"
-        - "/home/pi/edits/"
-      recursive: yes
-      retrieve: files
-      regexp: '.*\.(avi|mkv|mp4)$'
-    if:
-      - trakt_watched: accept
-    exec:
-      on_output:
-        for_accepted:
-          - rm "{{location}}"
-
 
