@@ -1,12 +1,13 @@
 tasks:
 
-  edits:
+  editShow:
     metainfo_series: yes
     trakt_lookup: yes
     tvmaze_lookup: yes
+    tmdb_lookup: yes
     filesystem:
       path:
-        - "/home/pi/torrents/shows/"
+        - "/home/ryan/torrents/shows/"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -16,12 +17,34 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - cp "{{location}}" "/home/pi/edits/{{series_name}}.{{series_id}}.mkv"
-          - cleanvid -i "/home/pi/edits/{{series_name}}.{{series_id}}.mkv" -o "/home/pi/edits/{{series_name}}.{{series_id}}_clean.mkv" -w /home/pi/.flexget/swears.txt -e -p 0
-          - if [ -f "/home/pi/edits/{{series_name}}.{{series_id}}_clean.mkv" ]; then rm "/home/pi/edits/{{series_name}}.{{series_id}}_clean.mkv"; else echo "nothing to clean"; fi
-      on_exit:
+          - ffmpeg -i "{{location}}"  -map 0:s -c:s srt -f srt -metadata:s:s:0 language=eng "/home/ryan/edits/{{filename}}.srt"
+          - cleanvid -i "/home/ryan/edits/fake.mkv" -s "/home/ryan/edits/{{filename}}.srt" -w /home/ryan/.flexget/swears.txt --plex-auto-skip-json "/home/ryan/plex_autoskip/{{filename}}.json" --plex-auto-skip-id tmdb://{{tmdb_id}}.{{series_season}}.{{series_episode}} -p 0
+          - sed -i 's/volume/skip/g' "/home/ryan/plex_autoskip/{{filename}}.json"
+          - rm /home/ryan/edits/*.srt
+
+  editMovie:
+    disable: seen
+    tmdb_lookup: yes
+    imdb_lookup: yes
+    filesystem:
+      path:
+        - "/home/ryan/torrents/movies/"
+      recursive: yes
+      retrieve: files
+      regexp: '.*\.(avi|mkv|mp4)$'
+    if:
+      - imdb_mpaa_rating == 'R': accept
+    exec:
+      on_output:
         for_accepted:
-          - rm "{{location}}"
+          # sub check
+          - ffmpeg -i "{{location}}"  -map 0:s -c:s srt -f srt -metadata:s:s:0 language=eng "/home/ryan/edits/{{filename}}.srt"
+          - cleanvid -i "/home/ryan/edits/fake.mkv" -s "/home/ryan/edits/{{filename}}.srt" -w /home/ryan/.flexget/swears.txt --plex-auto-skip-json "/home/ryan/plex_autoskip/{{movie_name}}.json" --plex-auto-skip-id tmdb://{{tmdb_id}} -p 0
+          - sed -i 's/volume/skip/g' "/home/ryan/plex_autoskip/{{filename}}.json"
+          - rm /home/ryan/edits/*.srt
+          # vidangel check
+          - /home/ryan/edits/vaCheck.sh {{movie_name}} {{tmdb_id}} "/home/ryan/plex_autoskip/{{movie_name}}_va"
+          - rm /home/ryan/edits/*.json
 
   newmovies:
     delay: 12 hours
@@ -46,4 +69,3 @@ tasks:
           account: profile
           list: watchlist
           type: movies
-
