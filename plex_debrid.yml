@@ -17,8 +17,8 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - ffmpeg -i "{{location}}"  -map 0:s -c:s srt -f srt -metadata:s:s:0 language=eng "/home/ryan/edits/{{filename}}.srt"
-          - cleanvid -i "/home/ryan/edits/fake.mkv" -s "/home/ryan/edits/{{filename}}.srt" -w /home/ryan/.flexget/swears.txt --plex-auto-skip-json "/home/ryan/plex_autoskip/{{filename}}.json" --plex-auto-skip-id tmdb://{{tmdb_id}}.{{series_season}}.{{series_episode}} -p 0
+          - /home/ryan/edits/subCheck.sh "{{location}}"
+          - cleanvid -i "/home/ryan/edits/fake.mkv" -s "/home/ryan/edits/output.srt" -w /home/ryan/.flexget/swears.txt --plex-auto-skip-json "/home/ryan/plex_autoskip/{{filename}}.json" --plex-auto-skip-id tmdb://{{tmdb_id}}.{{series_season}}.{{series_episode}} -p 0
           - sed -i 's/volume/skip/g' "/home/ryan/plex_autoskip/{{filename}}.json"
           - rm /home/ryan/edits/*.srt
 
@@ -38,13 +38,14 @@ tasks:
       on_output:
         for_accepted:
           # sub check
-          - ffmpeg -i "{{location}}"  -map 0:s -c:s srt -f srt -metadata:s:s:0 language=eng "/home/ryan/edits/{{filename}}.srt"
-          - cleanvid -i "/home/ryan/edits/fake.mkv" -s "/home/ryan/edits/{{filename}}.srt" -w /home/ryan/.flexget/swears.txt --plex-auto-skip-json "/home/ryan/plex_autoskip/{{movie_name}}.json" --plex-auto-skip-id tmdb://{{tmdb_id}} -p 0
+          - /home/ryan/edits/subCheck.sh "{{location}}"
+          - cleanvid -i "/home/ryan/edits/fake.mkv" -s "/home/ryan/edits/output.srt" -w /home/ryan/.flexget/swears.txt --plex-auto-skip-json "/home/ryan/plex_autoskip/{{movie_name}}.json" --plex-auto-skip-id tmdb://{{tmdb_id}} -p 0
           - sed -i 's/volume/skip/g' "/home/ryan/plex_autoskip/{{filename}}.json"
           - rm /home/ryan/edits/*.srt
           # vidangel check
           - /home/ryan/edits/vaCheck.sh {{movie_name}} {{tmdb_id}} "/home/ryan/plex_autoskip/{{movie_name}}_va"
           - rm /home/ryan/edits/*.json
+
 
   newmovies:
     delay: 12 hours
