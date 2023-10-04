@@ -1,24 +1,19 @@
 series:
   shows:
-  
-# anime in s00e00 format  
+
+# anime in s00e00 format
     - Yuru Camp
-    - Made in Abyss
-    - Nier Automata
     - Spy x Family
-    
+
 # Not yet on showrss
-    - Gardeners World
     - Sanditon
     - The Other One
     - The Yorkshire Vet
     - Trying
-    
+
 # New Shows
-    - Rabbit Hole
-    - Essex County
-    - Secret Invasion
-    - Silo
+    - All the Light We Cannot See
+    - Frasier 2023
 
   settings:
     shows:
