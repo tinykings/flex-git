@@ -1,13 +1,109 @@
 tasks:
 
+# Showrss profile rss
+  shows-rss:
+    magnets: yes
+    convert_magnet:
+      timeout: 10 seconds
+      force: yes
+    rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
+    all_series: yes
+    download:
+      path: /home/ryan/temp
+      overwrite: yes
+      fail_html: no
+    exec:
+      on_output:
+        for_accepted:
+          - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
+          - rm "{{location}}"
+
+# Other series/anime from the series.yml file
+  shows-other:
+    include: series.yml
+    magnets: yes
+    convert_magnet:
+      timeout: 10 seconds
+      force: yes
+    inputs:
+      - rss: https://eztv.re/ezrss.xml
+      - rss: https://www.limetorrents.info/rss/20/
+      - rss: https://torrentgalaxy.to/rss?cat=41
+      - rss: https://nyaa.si/?page=rss&q=s01&c=1_2&f=0
+    download:
+      path: /home/ryan/temp
+      overwrite: yes
+      fail_html: no
+    exec:
+      on_output:
+        for_accepted:
+          - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
+          - rm "{{location}}"
+
+# New movies released - trakt list
+  movies-new:
+    delay: 12 hours
+    imdb_lookup: yes
+    trakt_list:
+      username: giladg
+      list: latest-releases
+      type: movies
+      strip_dates: yes
+    imdb:
+      min_score: 7
+      min_votes: 5000
+      reject_genres:
+        - horror
+      accept_mpaa_ratings:
+        - PG
+        - PG-13
+    list_add:
+      - movie_list: new-movies
+
+# Download movies
+  movies-get:
+    disable: seen
+    tmdb_lookup: yes
+    movie_list: new-movies
+    quality: 1080p webrip+
+    magnets: yes
+    convert_magnet:
+      timeout: 10 seconds
+      force: yes
+    content_size:
+      min: 1000
+      max: 5000
+    discover:
+      release_estimations: ignore
+      interval: 15 minutes
+      what:
+        - movie_list: new-movies
+      from:
+        - piratebay:
+            category: highres movies
+        - limetorrents:
+            category: movies
+        - yts: true
+    list_match:
+      from:
+        - movie_list: new-movies
+    download:
+      path: /home/ryan/temp
+      overwrite: yes
+      fail_html: no
+    exec:
+      on_output:
+        for_accepted:
+          - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
+          - rm "{{location}}"
+
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
   clean:
-    priority: 1
     metainfo_series: yes
     trakt_lookup: yes
     tvmaze_lookup: yes
     filesystem:
-      path: "/home/pi/series"
+      path: "/home/ryan/torrents/shows"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
@@ -17,65 +113,9 @@ tasks:
     exec:
       on_output:
         for_accepted:
-          - /home/pi/.local/bin/cleanvid -i "{{location}}" -o "{{location}}_clean.mkv" -w /home/pi/flexget/swears.txt -e -p 0
-          - if [ -f "{{location}}_clean.mkv" ]; then rm "{{location}}"; else echo "nothing to clean"; fi
+          - cp "{{location}}" /mnt/d/Media/"{{filename}}"
+          - /home/ryan/.local/bin/cleanvid -i /mnt/d/Media/"{{filename}}" -o /mnt/d/Media/"{{filename}}_clean.mkv" -w /home/ryan/.flexget/swears.txt -e -p 0
+          - if [ -f /mnt/d/Media/"{{filename}}_clean.mkv" ]; then rm /mnt/d/Media/"{{filename}}"; else echo "nothing to clean"; fi
+          - rm "{{location}}"
       on_exit:
-        phase:
-          - find /home/pi/series/ -type f -name \*.srt -delete
-          - find /home/pi/series/ -type f -name \*.exe -delete
-          - find /home/pi/series/ -type f -name \*.txt -delete
-
-# Showrss profile rss
-  showrss:
-    priority: 2
-    rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
-    all_series: yes
-    transmission:
-      host: localhost
-      main_file_only: yes
-
-# Other series/anime from the series.yml file
-  other:
-    priority: 3
-    include: series.yml
-    inputs:
-      - rss: https://eztv.re/ezrss.xml
-      - rss: https://www.limetorrents.info/rss/20/
-      - rss: https://torrentgalaxy.to/rss?cat=41
-      - rss: https://rarbg.to/rssdd.php?category=1;18;41;49
-      - rss: https://nyaa.si/?page=rss&q=s01&c=1_2&f=0
-    transmission:
-      host: localhost
-      main_file_only: yes
-
-# Remove complete from transmission
-  cleanup:
-    priority: 4
-    delay: 23 hours
-    no_entries_ok: yes
-    disable:
-      - seen
-      - seen_info_hash
-      - retry_failed
-    from_transmission:
-      port: 9091
-    accept_all: yes
-    if:
-      - transmission_date_done == None: fail
-      - not transmission_seed_ratio_ok and not transmission_idle_limit_ok: reject
-    transmission:
-      host: localhost
-      action: remove
-
-# Sync updates to files.
-  backup:
-    priority: 5
-    no_entries_ok: yes
-    accept_all: yes
-    exec:
-      on_exit:
-        phase:
-          - cd /home/pi/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git add config.yml series.yml > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git commit -m "update" > /dev/null 2>&1
-          - cd /home/pi/.flexget/ && git push origin main > /dev/null 2>&1
+        phase: rm /mnt/d/Media/*.srt
