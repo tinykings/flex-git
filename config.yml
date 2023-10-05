@@ -1,7 +1,21 @@
 tasks:
 
+# Sync file changes.
+  backup:
+    priority: 1
+    no_entries_ok: yes
+    accept_all: yes
+    exec:
+      on_exit:
+        phase:
+          - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git add config.yml series.yml > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
+
 # Showrss profile rss
   shows-rss:
+    priority: 2
     magnets: yes
     convert_magnet:
       timeout: 10 seconds
@@ -20,6 +34,7 @@ tasks:
 
 # Other series/anime from the series.yml file
   shows-other:
+    priority: 3
     include: series.yml
     magnets: yes
     convert_magnet:
@@ -42,6 +57,7 @@ tasks:
 
 # New movies released - trakt list
   movies-new:
+    priority: 4
     delay: 12 hours
     imdb_lookup: yes
     trakt_list:
@@ -62,6 +78,7 @@ tasks:
 
 # Download movies
   movies-get:
+    priority: 5
     disable: seen
     tmdb_lookup: yes
     movie_list: new-movies
@@ -99,6 +116,7 @@ tasks:
 
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
   clean:
+    priority: 6
     metainfo_series: yes
     trakt_lookup: yes
     tvmaze_lookup: yes
@@ -111,6 +129,8 @@ tasks:
       - trakt_series_content_rating == 'TV-MA': accept
       - "'anime' in trakt_genres": reject
     exec:
+      on_start:
+        phase: sleep 30
       on_output:
         for_accepted:
           - cp "{{location}}" /mnt/d/Media/"{{filename}}"
@@ -119,3 +139,4 @@ tasks:
           - rm "{{location}}"
       on_exit:
         phase: rm /mnt/d/Media/*.srt
+
