@@ -9,7 +9,7 @@ tasks:
       on_exit:
         phase:
           - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git add config.yml series.yml > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git add config.yml series.yml getmovies.txt > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
 
@@ -76,24 +76,16 @@ tasks:
     list_add:
       - movie_list: new-movies
 
-  movies-new-va:
+  movies-manual:
     priority: 5
     tail:
-      file: /home/ryan/.flexget/vaNewMovies.log
+      file: /home/ryan/.flexget/getmovies.txt
       entry:
         title: '^([^,]+)'
         url: '^([^,]+)'
       encoding: utf8
-    imdb:
-      min_score: 7
-      min_votes: 5000
-      reject_genres:
-        - horror
     list_add:
       - movie_list: new-movies
-    exec:
-      on_start:
-        phase: sh /home/ryan/.flexget/va.sh newmovies
 
 # Download movies
   movies-get:
@@ -158,22 +150,3 @@ tasks:
           - rm "{{location}}"
       on_exit:
         phase: rm /mnt/d/Media/*.srt
-
-  clean-movies:
-    priority: 8
-    tmdb_lookup: yes
-    imdb_lookup: yes
-    filesystem:
-      path:
-        - "/home/ryan/torrents/movies/"
-      recursive: yes
-      retrieve: files
-      regexp: '.*\.(avi|mkv|mp4)$'
-    if:
-      - imdb_mpaa_rating == 'R': accept
-    exec:
-      on_output:
-        for_accepted:
-          - cp "{{location}}" /mnt/d/Media/"{{filename}}"
-          - sh /home/ryan/va.sh movie "{{movie_name}}" /mnt/d/Media/"{{filename}}"
-          - rm "{{location}}"
