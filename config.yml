@@ -107,7 +107,7 @@ tasks:
       timeout: 10 seconds
       force: yes
     content_size:
-      min: 1000
+      min: 500
       max: 5000
     discover:
       release_estimations: ignore
