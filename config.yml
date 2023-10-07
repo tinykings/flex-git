@@ -2,7 +2,7 @@ tasks:
 
 # Sync file changes.
   backup:
-    manual: yes
+    priority: 1
     no_entries_ok: yes
     accept_all: yes
     exec:
@@ -55,6 +55,84 @@ tasks:
           - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
           - rm "{{location}}"
 
+# New movies released - trakt list
+  movies-new:
+    priority: 4
+    delay: 12 hours
+    imdb_lookup: yes
+    trakt_list:
+      username: giladg
+      list: latest-releases
+      type: movies
+      strip_dates: yes
+    imdb:
+      min_score: 7
+      min_votes: 5000
+      reject_genres:
+        - horror
+      accept_mpaa_ratings:
+        - PG
+        - PG-13
+    list_add:
+      - movie_list: new-movies
+
+  movies-new-va:
+    priority: 5
+    tail:
+      file: /home/ryan/.flexget/vaNewMovies.log
+      entry:
+        title: '^([^,]+)'
+        url: '^([^,]+)'
+      encoding: utf8
+    imdb:
+      min_score: 7
+      min_votes: 5000
+      reject_genres:
+        - horror
+    list_add:
+      - movie_list: new-movies
+    exec:
+      on_start:
+        phase: sh /home/ryan/.flexget/va.sh newmovies
+
+# Download movies
+  movies-get:
+    priority: 6
+    disable: seen
+    tmdb_lookup: yes
+    movie_list: new-movies
+    quality: 1080p webrip+
+    magnets: yes
+    convert_magnet:
+      timeout: 10 seconds
+      force: yes
+    content_size:
+      min: 1000
+      max: 5000
+    discover:
+      release_estimations: ignore
+      interval: 15 minutes
+      what:
+        - movie_list: new-movies
+      from:
+        - piratebay:
+            category: highres movies
+        - limetorrents:
+            category: movies
+        - yts: true
+    list_match:
+      from:
+        - movie_list: new-movies
+    download:
+      path: /home/ryan/temp
+      overwrite: yes
+      fail_html: no
+    exec:
+      on_output:
+        for_accepted:
+          - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
+          - rm "{{location}}"
+
 # Cleanvid (https://github.com/mmguero/cleanvid) new files.
   clean-shows:
     priority: 7
@@ -80,3 +158,22 @@ tasks:
           - rm "{{location}}"
       on_exit:
         phase: rm /mnt/d/Media/*.srt
+
+  clean-movies:
+    priority: 8
+    tmdb_lookup: yes
+    imdb_lookup: yes
+    filesystem:
+      path:
+        - "/home/ryan/torrents/movies/"
+      recursive: yes
+      retrieve: files
+      regexp: '.*\.(avi|mkv|mp4)$'
+    if:
+      - imdb_mpaa_rating == 'R': accept
+    exec:
+      on_output:
+        for_accepted:
+          - cp "{{location}}" /mnt/d/Media/"{{filename}}"
+          - sh /home/ryan/va.sh movie "{{movie_name}}" /mnt/d/Media/"{{filename}}"
+          - rm "{{location}}"
