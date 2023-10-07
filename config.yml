@@ -84,6 +84,7 @@ tasks:
         title: '^([^,]+)'
         url: '^([^,]+)'
       encoding: utf8
+    accept_all: yes
     list_add:
       - movie_list: new-movies
 
