@@ -44,7 +44,7 @@ tasks:
       - rss: https://eztv.re/ezrss.xml
       - rss: https://www.limetorrents.info/rss/20/
       - rss: https://torrentgalaxy.to/rss?cat=41
-      - rss: https://nyaa.si/?page=rss&q=s01&c=1_2&f=0
+      - rss: https://nyaa.si/?page=rss&q=s0&c=1_2&f=0
     download:
       path: /home/ryan/temp
       overwrite: yes
