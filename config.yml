@@ -1,7 +1,9 @@
+variables: secrets.yml
 tasks:
 
 # Sync file changes.
   backup:
+    manual: yes
     priority: 1
     no_entries_ok: yes
     accept_all: yes
@@ -9,55 +11,14 @@ tasks:
       on_exit:
         phase:
           - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git add config.yml series.yml getmovies.txt > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git add config.yml series.yml > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
 
-# Showrss profile rss
-  shows-rss:
-    priority: 2
-    magnets: yes
-    convert_magnet:
-      timeout: 10 seconds
-      force: yes
-    rss: https://showrss.info/user/247283.rss?magnets=true&namespaces=true&name=null&quality=anyhd&re=yes
-    all_series: yes
-    download:
-      path: /home/ryan/temp
-      overwrite: yes
-      fail_html: no
-    exec:
-      on_output:
-        for_accepted:
-          - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
-          - rm "{{location}}"
-
-# Other series/anime from the series.yml file
-  shows-other:
-    priority: 3
-    include: series.yml
-    magnets: yes
-    convert_magnet:
-      timeout: 10 seconds
-      force: yes
-    inputs:
-      - rss: https://eztv.re/ezrss.xml
-      - rss: https://www.limetorrents.info/rss/20/
-      - rss: https://torrentgalaxy.to/rss?cat=41
-      - rss: https://nyaa.si/?page=rss&q=s0&c=1_2&f=0
-    download:
-      path: /home/ryan/temp
-      overwrite: yes
-      fail_html: no
-    exec:
-      on_output:
-        for_accepted:
-          - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
-          - rm "{{location}}"
 
 # New movies released - trakt list
   movies-new:
-    priority: 4
+    priority: 2
     delay: 12 hours
     imdb_lookup: yes
     trakt_list:
@@ -74,8 +35,12 @@ tasks:
         - PG
         - PG-13
     list_add:
-      - movie_list: new-movies
+      - trakt_list:
+          account: "{? trakt.account ?}"
+          list: watchlist
+          type: movies
 
+<<<<<<< HEAD
   movies-new-va:
     priority: 5
     tail:
@@ -139,29 +104,45 @@ tasks:
       path: /home/ryan/temp
       overwrite: yes
       fail_html: no
+=======
+# PlexDebrid.
+  plexdebrid:
+    priority: 3
+    no_entries_ok: yes
+    accept_all: yes
+>>>>>>> 3d0257b (update)
     exec:
-      on_output:
-        for_accepted:
-          - python3 /home/ryan/.flexget/rdadd.py "{{location}}"
-          - rm "{{location}}"
+      on_start:
+        phase:
+          - cd /home/ryan/plex_debrid/ && screen -d -m python3 main.py
+          - echo "wait 10 min..."
+          - sleep 600
+      on_exit:
+        phase:
+          - pkill screen
 
-# Cleanvid (https://github.com/mmguero/cleanvid) new files.
-  clean-shows:
-    priority: 7
+
+# Cleanvid files not on va (https://github.com/mmguero/cleanvid).
+  edit:
+    priority: 4
     metainfo_series: yes
     trakt_lookup: yes
-    tvmaze_lookup: yes
     filesystem:
       path: "/home/ryan/torrents/shows"
       recursive: yes
       retrieve: files
       regexp: '.*\.(avi|mkv|mp4)$'
-    if:
-      - trakt_series_content_rating == 'TV-MA': accept
-      - "'anime' in trakt_genres": reject
+    crossmatch:
+      from:
+        - trakt_list:
+            account: "{? trakt.account ?}"
+            list: "{? trakt.edit ?}"
+            type: shows
+      fields:
+        - series_name
+        - trakt_series_name
+      action: accept
     exec:
-      on_start:
-        phase: sleep 30
       on_output:
         for_accepted:
           - cp "{{location}}" /mnt/d/Media/"{{filename}}"
