@@ -11,7 +11,7 @@ tasks:
       on_exit:
         phase:
           - cd /home/ryan/.flexget/ && git pull > /dev/null 2>&1
-          - cd /home/ryan/.flexget/ && git add config.yml series.yml > /dev/null 2>&1
+          - cd /home/ryan/.flexget/ && git add config.yml > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
 
