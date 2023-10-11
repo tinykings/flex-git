@@ -85,3 +85,13 @@ tasks:
           - rm "{{location}}"
       on_exit:
         phase: rm /mnt/d/Media/*.srt
+
+# Any files on RD pending add
+  rdsync:
+    priority: 5
+    no_entries_ok: yes
+    accept_all: yes
+    exec:
+      on_exit:
+        phase:
+          - python3 /home/ryan/.flexget/rdadd.py
