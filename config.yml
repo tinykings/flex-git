@@ -15,33 +15,9 @@ tasks:
           - cd /home/ryan/.flexget/ && git commit -m "update" > /dev/null 2>&1
           - cd /home/ryan/.flexget/ && git push origin main > /dev/null 2>&1
 
-
-# New movies released - trakt list
-  movies-new:
-    priority: 2
-    imdb_lookup: yes
-    trakt_list:
-      username: giladg
-      list: latest-releases
-      type: movies
-      strip_dates: yes
-    imdb:
-      min_score: 7
-      min_votes: 5000
-      reject_genres:
-        - horror
-      accept_mpaa_ratings:
-        - PG
-        - PG-13
-    list_add:
-      - trakt_list:
-          account: "{? trakt.account ?}"
-          list: watchlist
-          type: movies
-
 # PlexDebrid.
   plexdebrid:
-    priority: 3
+    priority: 2
     no_entries_ok: yes
     accept_all: yes
     exec:
@@ -54,40 +30,9 @@ tasks:
         phase:
           - pkill screen
 
-
-# Cleanvid files not on va (https://github.com/mmguero/cleanvid).
-  edit:
-    priority: 4
-    metainfo_series: yes
-    trakt_lookup: yes
-    filesystem:
-      path: "/home/ryan/torrents/shows"
-      recursive: yes
-      retrieve: files
-      regexp: '.*\.(avi|mkv|mp4)$'
-    crossmatch:
-      from:
-        - trakt_list:
-            account: "{? trakt.account ?}"
-            list: "{? trakt.edit ?}"
-            type: shows
-      fields:
-        - series_name
-        - trakt_series_name
-      action: accept
-    exec:
-      on_output:
-        for_accepted:
-          - cp "{{location}}" /mnt/d/Media/"{{filename}}"
-          - /home/ryan/.local/bin/cleanvid -i /mnt/d/Media/"{{filename}}" -o /mnt/d/Media/"{{filename}}_clean.mkv" -w /home/ryan/.flexget/swears.txt -e -p 0
-          - if [ -f /mnt/d/Media/"{{filename}}_clean.mkv" ]; then rm /mnt/d/Media/"{{filename}}"; else echo "nothing to clean"; fi
-          - rm "{{location}}"
-      on_exit:
-        phase: rm /mnt/d/Media/*.srt
-
 # Any files on RD pending add
   rdsync:
-    priority: 5
+    priority: 3
     no_entries_ok: yes
     accept_all: yes
     exec:
